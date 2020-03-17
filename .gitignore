@@ -2,6 +2,10 @@
 ### Example user template template
 ### Example user template
 
+# Wubo Template
+LOG_HOME
+
+
 # IntelliJ project files
 .idea
 *.iml
@@ -156,3 +160,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+everyknow-seims-core/src/
+everyknow-seims-deploy/src/test/
+everyknow-seims-web/src/
