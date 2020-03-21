@@ -15,6 +15,7 @@
         <module>everyknow-seims-deploy</module>
         <module>everyknow-seims-web</module>
         <module>everyknow-seims-core</module>
+        <module>everyknow-common</module>
     </modules>
 
     <!--  依赖版本管理配置  -->
@@ -89,6 +90,11 @@
                 <version>${spring_boot_version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>2.0.6.RELEASE</version>
+            </dependency>
+            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>3.1.0</version>
@@ -109,11 +115,18 @@
                 <version>${mybatis_plus_boot_version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+            <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.1.21</version>
+            </dependency>
+
+            <!-- HuTool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.2.3</version>
             </dependency>
 
 

@@ -1,5 +1,52 @@
 server:
   port: 8090
-#logging:
-#  file:
-#    name: logback-spring.xml
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/everyknowseims?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 13241300
+    type: com.alibaba.druid.pool.DruidDataSource
+    # Druid 配置
+    druid:
+      ###监控配置 begin###
+      # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+#        exclusions: *.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*
+      # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: admin
+        login-password: admin
+        allow: 127.0.0.1
+      ###监控配置 end###
+      # 配置Filter
+      filter:
+        # 配置StatFilter
+        stat:
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 5000
+        # 配置WallFilter
+        wall:
+          enabled: true
+          db-type: mysql
+          config:
+            delete-allow: true
+            drop-table-allow: false
+  # 时间戳设置
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8
+# mybatis-plus 配置
+#mybatis-plus:
+#  config-location: classpath:mappers/*.xml
+
+
+
+
