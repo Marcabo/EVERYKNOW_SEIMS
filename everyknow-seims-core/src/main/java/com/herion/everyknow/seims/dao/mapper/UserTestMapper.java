@@ -2,13 +2,22 @@ package com.herion.everyknow.seims.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.herion.everyknow.seims.dao.entity.UserTest;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Description
+ * @Description ${description}
  * @auther wubo25320
- * @create 2020-03-18 14:11
+ * @create 2020-03-24 10:48
  */
-@Mapper
 public interface UserTestMapper extends BaseMapper<UserTest> {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(UserTest record);
+
+    int insertSelective(UserTest record);
+
+    UserTest selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(UserTest record);
+
+    int updateByPrimaryKey(UserTest record);
 }

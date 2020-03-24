@@ -42,7 +42,7 @@ public class TestController {
 
     @RequestMapping("/testQueryAll")
     public Object testQueryAll() {
-        return testService.queryAll();
+        return ResultUtils.getSuccessResponse(testService.queryAll());
     }
 
     @RequestMapping("/testCommon")

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.herion.everyknow.seims.dao.mapper.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.herion.everyknow.seims.dao.entity.Dept">
+    <!--@mbg.generated-->
+    <!--@Table dept-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+    <result column="college_code" jdbcType="VARCHAR" property="collegeCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, dept_name, dept_code, college_code
+  </sql>
+</mapper>

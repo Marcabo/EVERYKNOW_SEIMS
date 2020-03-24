@@ -23,8 +23,6 @@ public class EveryKnowSEIMSApplication {
     }
 
 
-
-
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(EveryKnowSEIMSApplication.class);
         springApplication.run(args);

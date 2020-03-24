@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.herion.everyknow.seims.dao.mapper.StudentEmploymentInfoMapper">
+  <resultMap id="BaseResultMap" type="com.herion.everyknow.seims.dao.entity.StudentEmploymentInfo">
+    <!--@mbg.generated-->
+    <!--@Table student_employment_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result column="company_full_name" jdbcType="VARCHAR" property="companyFullName" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="company_nature_code" jdbcType="VARCHAR" property="companyNatureCode" />
+    <result column="company_contact_name" jdbcType="VARCHAR" property="companyContactName" />
+    <result column="company_contact_phone" jdbcType="VARCHAR" property="companyContactPhone" />
+    <result column="company_province" jdbcType="VARCHAR" property="companyProvince" />
+    <result column="company_city" jdbcType="VARCHAR" property="companyCity" />
+    <result column="company_addr" jdbcType="VARCHAR" property="companyAddr" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="industry_type" jdbcType="VARCHAR" property="industryType" />
+    <result column="salary" jdbcType="INTEGER" property="salary" />
+    <result column="employ_method" jdbcType="VARCHAR" property="employMethod" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, stu_id, company_full_name, company_code, company_nature_code, company_contact_name, 
+    company_contact_phone, company_province, company_city, company_addr, major, industry_type, 
+    salary, employ_method
+  </sql>
+</mapper>

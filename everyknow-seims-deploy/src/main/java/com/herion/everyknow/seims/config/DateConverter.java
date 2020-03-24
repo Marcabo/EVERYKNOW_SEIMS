@@ -24,6 +24,7 @@ public class DateConverter implements Converter<String, Date> {
     private static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
     private static final String shortDateFormat = "yyyy-MM-dd";
     private static final String timeStampFormat = "^\\d+$";
+    private static final String springTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     @Override
     public Date convert(String value) {
@@ -39,7 +40,11 @@ public class DateConverter implements Converter<String, Date> {
             if (value.contains("-")) {
                 SimpleDateFormat formatter;
                 if (value.contains(":")) {
-                    formatter = new SimpleDateFormat(dateFormat);
+                    if (value.contains("T")) {
+                        formatter = new SimpleDateFormat(springTimeFormat);
+                    } else {
+                        formatter = new SimpleDateFormat(dateFormat);
+                    }
                 } else {
                     formatter = new SimpleDateFormat(shortDateFormat);
                 }
