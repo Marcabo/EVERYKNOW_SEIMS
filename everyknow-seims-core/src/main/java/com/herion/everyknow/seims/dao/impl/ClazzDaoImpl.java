@@ -1,5 +1,8 @@
 package com.herion.everyknow.seims.dao.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.herion.everyknow.seims.dao.ClazzDao;
 import com.herion.everyknow.seims.dao.entity.Clazz;
 import com.herion.everyknow.seims.dao.mapper.ClazzMapper;
@@ -19,33 +22,73 @@ public class ClazzDaoImpl implements ClazzDao {
     @Autowired
     private ClazzMapper mapper;
 
+
     @Override
     public Clazz queryById(Integer id) {
-        return null;
+        return mapper.selectById(id);
     }
 
     @Override
-    public List<Clazz> queryAllByLimit(int offset, int limit) {
-        return null;
+    public List<Clazz> queryAll() {
+        return mapper.selectList(new LambdaQueryWrapper<Clazz>());
     }
 
     @Override
-    public List<Clazz> queryAll(Clazz clazz) {
-        return null;
+    public List<Clazz> queryList(Clazz clazz) {
+        return mapper.selectList(this.createWrapper(clazz));
     }
 
     @Override
     public int insert(Clazz clazz) {
-        return 0;
+        return mapper.insert(clazz);
     }
 
     @Override
-    public int update(Clazz clazz) {
-        return 0;
+    public int updateById(Clazz clazz) {
+        return mapper.updateById(clazz);
+    }
+
+    @Override
+    public int updateCollegeCode(Clazz clazz, String collegeCode) {
+        LambdaUpdateWrapper<Clazz> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Clazz::getCollegeCode, collegeCode);
+        return mapper.update(clazz, wrapper);
+    }
+
+    @Override
+    public int updateDeptCode(Clazz clazz, String deptCode) {
+        LambdaUpdateWrapper<Clazz> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Clazz::getDeptCode, deptCode);
+        return mapper.update(clazz, wrapper);
     }
 
     @Override
     public int deleteById(Integer id) {
-        return 0;
+        return mapper.deleteById(id);
+    }
+
+    @Override
+    public int delete(Clazz clazz) {
+        return mapper.delete(this.createWrapper(clazz));
+    }
+
+    public LambdaQueryWrapper<Clazz> createWrapper(Clazz clazz) {
+        LambdaQueryWrapper<Clazz> wrapper = new LambdaQueryWrapper<>();
+        if (clazz.getId() != null) {
+            wrapper.eq(Clazz::getId, clazz.getId());
+        }
+        if (StrUtil.isNotBlank(clazz.getClazzName())) {
+            wrapper.eq(Clazz::getClazzName, clazz.getClazzName());
+        }
+        if (StrUtil.isNotBlank(clazz.getCollegeCode())) {
+            wrapper.eq(Clazz::getCollegeCode, clazz.getCollegeCode());
+        }
+        if (StrUtil.isNotBlank(clazz.getDeptCode())) {
+            wrapper.eq(Clazz::getDeptCode, clazz.getDeptCode());
+        }
+        if (clazz.getEntrySession() != null) {
+            wrapper.eq(Clazz::getEntrySession, clazz.getEntrySession());
+        }
+        return wrapper;
     }
 }

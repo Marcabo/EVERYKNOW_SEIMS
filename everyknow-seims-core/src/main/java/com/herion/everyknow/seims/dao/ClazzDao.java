@@ -21,22 +21,18 @@ public interface ClazzDao {
     Clazz queryById(Integer id);
 
     /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<Clazz> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
-
-    /**
      * 通过实体作为筛选条件查询
      *
-     * @param clazz 实例对象
      * @return 对象列表
      */
-    List<Clazz> queryAll(Clazz clazz);
+    List<Clazz> queryAll();
+
+    /**
+     * 通过实体作为筛选条件
+     * @param clazz
+     * @return
+     */
+    List<Clazz> queryList(Clazz clazz);
 
     /**
      * 新增数据
@@ -52,7 +48,23 @@ public interface ClazzDao {
      * @param clazz 实例对象
      * @return 影响行数
      */
-    int update(Clazz clazz);
+    int updateById(Clazz clazz);
+
+    /**
+     * 根据 collegeCode 更新
+     * @param collegeCode
+     * @param clazz
+     * @return
+     */
+    int updateCollegeCode(Clazz clazz, String collegeCode);
+
+    /**
+     * 根据 deptCode 更新
+     * @param clazz
+     * @param deptCode
+     * @return
+     */
+    int updateDeptCode(Clazz clazz, String deptCode);
 
     /**
      * 通过主键删除数据
@@ -61,5 +73,12 @@ public interface ClazzDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
+
+    /**
+     * 条件删除
+     * @param clazz
+     * @return
+     */
+    int delete(Clazz clazz);
 
 }

@@ -1,5 +1,6 @@
 package com.herion.everyknow.seims.dao.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.herion.everyknow.seims.dao.CollegeDao;
 import com.herion.everyknow.seims.dao.entity.College;
 import com.herion.everyknow.seims.dao.mapper.CollegeMapper;
@@ -22,31 +23,26 @@ public class CollegeDaoImpl implements CollegeDao {
     @Override
 
     public College queryById(Integer id) {
-        return null;
+        return mapper.selectById(id);
     }
 
     @Override
-    public List<College> queryAllByLimit(int offset, int limit) {
-        return null;
-    }
-
-    @Override
-    public List<College> queryAll(College college) {
-        return null;
+    public List<College> queryAll() {
+        return mapper.selectList(new LambdaQueryWrapper<College>());
     }
 
     @Override
     public int insert(College college) {
-        return 0;
+        return mapper.insert(college);
     }
 
     @Override
     public int update(College college) {
-        return 0;
+        return mapper.updateById(college);
     }
 
     @Override
     public int deleteById(Integer id) {
-        return 0;
+        return mapper.deleteById(id);
     }
 }

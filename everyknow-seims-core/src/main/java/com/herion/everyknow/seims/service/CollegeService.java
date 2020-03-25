@@ -1,16 +1,15 @@
-package com.herion.everyknow.seims.dao;
+package com.herion.everyknow.seims.service;
 
 import com.herion.everyknow.seims.dao.entity.College;
-import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
- * 学院表(College)表数据库访问层
- *
- * @author wubo25320
- * @since 2020-03-23 23:47:10
+ * @Description 学院管理 Service 层
+ * @auther wubo25320
+ * @create 2020-03-24 22:10
  */
-public interface CollegeDao {
+public interface CollegeService {
 
     /**
      * 通过ID查询单条数据
