@@ -66,6 +66,13 @@ public class DeptDaoImpl implements DeptDao {
         return mapper.delete(createWrapper(dept));
     }
 
+    @Override
+    public List<Dept> queryByName(String deptName) {
+        LambdaQueryWrapper<Dept> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(Dept::getDeptName, deptName);
+        return mapper.selectList(wrapper);
+    }
+
     private LambdaQueryWrapper<Dept> createWrapper(Dept dept) {
         LambdaQueryWrapper<Dept> wrapper = new LambdaQueryWrapper<>();
         if (dept.getId() != null) {

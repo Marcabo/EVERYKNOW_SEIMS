@@ -1,5 +1,7 @@
 package com.herion.everyknow.seims.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.herion.everyknow.common.exception.EKnowException;
 import com.herion.everyknow.seims.dao.ClazzDao;
 import com.herion.everyknow.seims.dao.DeptDao;
 import com.herion.everyknow.seims.dao.entity.Clazz;
@@ -41,6 +43,13 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public int insert(Dept dept) {
+        if (this.queryByCode(dept.getDeptCode()) != null) {
+            throw new EKnowException("已存在同 code 的专业");
+        }
+
+        if (StrUtil.isBlank(dept.getCollegeCode())) {
+            throw new EKnowException("学院代码(collegeCode)不能为空");
+        }
         return deptDao.insert(dept);
     }
 
@@ -49,9 +58,17 @@ public class DeptServiceImpl implements DeptService {
         Dept oldDept = deptDao.queryById(dept.getId());
 
         if (!dept.getDeptCode().equals(oldDept.getDeptCode())) {
+            if (this.queryByCode(dept.getDeptCode()) != null) {
+                throw new EKnowException("已存在同 code 的专业");
+            }
+
             Clazz newClazz = new Clazz();
             newClazz.setDeptCode(dept.getDeptCode());
             clazzDao.updateDeptCode(newClazz, oldDept.getDeptCode());
+        }
+
+        if (StrUtil.isBlank(dept.getCollegeCode())) {
+            throw new EKnowException("学院代码(collegeCode)不能为空");
         }
 
         return deptDao.updateById(dept);
@@ -66,5 +83,18 @@ public class DeptServiceImpl implements DeptService {
         clazzDao.delete(clazz);
 
         return deptDao.deleteById(id);
+    }
+
+    @Override
+    public Dept queryByCode(String deptCode) {
+        Dept query = new Dept();
+        query.setDeptCode(deptCode);
+        List<Dept> deptList = deptDao.queryList(query);
+        return deptList.size() > 0 ? deptList.get(0) : null;
+    }
+
+    @Override
+    public List<Dept> queryByName(String deptName) {
+        return deptDao.queryByName(deptName);
     }
 }

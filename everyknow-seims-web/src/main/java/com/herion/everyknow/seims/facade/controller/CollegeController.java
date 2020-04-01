@@ -62,4 +62,11 @@ public class CollegeController {
         return ResultUtils.getSuccessResponse(true);
     }
 
+    @ApiOperation(value = "根据 collegeName 模糊查询学员信息", notes = "模糊查询")
+    @RequestMapping(value = "/queryByName", method = RequestMethod.POST)
+    public EKnowResponse queryByName(@RequestBody CommonHttpRequest<CollegeRequest> request) {
+        List<College> collegeList = collegeService.queryByName(request.getRequest().getCollegeName());
+        return ResultUtils.getSuccessResponse(collegeList);
+    }
+
 }

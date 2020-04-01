@@ -58,4 +58,18 @@ public interface DeptService{
      */
     int deleteById(Integer id);
 
+    /**
+     * 根据 deptCode 查询
+     * @param deptCode
+     * @return
+     */
+    Dept queryByCode(String deptCode);
+
+    /**
+     * 根据 deptName 模糊查询
+     * @param deptName
+     * @return
+     */
+    List<Dept> queryByName(String deptName);
+
 }

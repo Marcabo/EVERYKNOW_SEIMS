@@ -73,4 +73,11 @@ public interface DeptDao {
      */
     int delete(Dept dept);
 
+    /**
+     * 根据 deptName 模糊查询
+     * @param deptName
+     * @return
+     */
+    List<Dept> queryByName(String deptName);
+
 }

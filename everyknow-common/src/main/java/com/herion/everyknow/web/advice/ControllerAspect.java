@@ -1,12 +1,13 @@
 package com.herion.everyknow.web.advice;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONObject;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.json.serialize.JSONObjectSerializer;
 import com.herion.everyknow.common.exception.EKnowException;
+import com.herion.everyknow.web.enums.EnumResponseType;
 import com.herion.everyknow.web.request.CommonRequest;
+import com.herion.everyknow.web.request.EKnowPageRequest;
 import com.herion.everyknow.web.request.EKnowRequest;
+import com.herion.everyknow.web.request.http.CommonHttpPageRequest;
 import com.herion.everyknow.web.response.EKnowPageResponse;
 import com.herion.everyknow.web.response.EKnowResponse;
 import com.herion.everyknow.web.util.ResultUtils;
@@ -16,11 +17,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.lang.annotation.Annotation;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * @Description 全局 Controller 切面
@@ -30,27 +31,30 @@ import java.util.Date;
 @Order(1)
 @Aspect
 @Slf4j
+//@RestControllerAdvice
 public class ControllerAspect {
 
-    /**
-     * 处理业务异常
-     * @param exception
-     * @return
-     */
-    @ExceptionHandler(EKnowException.class)
-    public EKnowResponse<String> EKnowExceptionHandler(EKnowException exception) {
-        return ResultUtils.getFailureResponse(exception.getErrorCode(), exception.getErrorMsg(), null);
-    }
-
-    /**
-     * 处理 所有异常
-     * @param exception
-     * @return
-     */
-    @ExceptionHandler(Exception.class)
-    public EKnowResponse<String> ExceptionHandler(Exception exception) {
-        return ResultUtils.getFailureResponse("500","未知异常", null);
-    }
+//    /**
+//     * 处理业务异常
+//     * @param exception
+//     * @return
+//     */
+//    @ExceptionHandler(EKnowException.class)
+//    public EKnowResponse<String> EKnowExceptionHandler(EKnowException exception) {
+//        exception.printStackTrace();
+//        return ResultUtils.getFailureResponse(exception.getErrorCode(), exception.getErrorMsg(), null);
+//    }
+//
+//    /**
+//     * 处理 所有异常
+//     * @param exception
+//     * @return
+//     */
+//    @ExceptionHandler(Exception.class)
+//    public EKnowResponse<String> ExceptionHandler(Exception exception) {
+//        exception.printStackTrace();
+//        return ResultUtils.getFailureResponse("500","未知异常", null);
+//    }
 
 
     @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
@@ -67,7 +71,21 @@ public class ControllerAspect {
         EKnowRequest eKnowRequest;
         eKnowRequest = initSystem(jp);
 
-        Object result = jp.proceed(args);
+        Object result = null;
+        if (!this.containAnnotation(target.getClass(), RestController.class.getName())) {
+            Object proceed = jp.proceed();
+            log.info("页面请求{}", jp.getTarget().toString());
+            return proceed;
+        }
+        try {
+            result = jp.proceed(args);
+        } catch (EKnowException exception) {
+            log.error("", exception);
+            result = this.getEknowErr(exception, args);
+        } catch (Exception e) {
+            log.error("", e);
+            result = this.getErr(e, args);
+        }
         log.info("Http服务: {}", jp.getSignature().getName());
         bizLog(result);
 
@@ -90,17 +108,92 @@ public class ControllerAspect {
         return result;
     }
 
+    private boolean containAnnotation(Class clazz, String annotation) {
+        if (clazz == null || StrUtil.isBlank(annotation)) {
+            return false;
+        }
+        Annotation[] annotations = clazz.getAnnotations();
+        if (annotations == null || annotations.length < 1) {
+            return false;
+        }
+        for (Annotation an : annotations) {
+            Class<? extends Annotation> aClass = an.annotationType();
+            if (aClass.getName().equals(annotation)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Object getEknowErr(EKnowException e, Object[] args) {
+        Object result = null;
+        boolean pageFlag = this.isPage(args);
+        if (!pageFlag) {
+            result = ResultUtils.getFailureResponse(e.getErrorCode(),e.getErrorMsg(), null);
+        } else {
+            EKnowPageRequest eKnowPageRequest = null;
+            // 如果是分页请求入参只有一个
+            if (args[0] instanceof EKnowPageRequest) {
+                eKnowPageRequest = (EKnowPageRequest) args[0];
+            }
+            if (args[0] instanceof CommonHttpPageRequest) {
+                eKnowPageRequest = ((CommonHttpPageRequest) args[0]).geteKnowRequest();
+            }
+            result = ResultUtils.getPageResponse(e.getErrorCode(),e.getErrorMsg(), EnumResponseType.SYS_ERR, null, eKnowPageRequest);
+        }
+        return result;
+    }
+
+    private Object getErr(Exception e, Object[] args) {
+        Object result = null;
+        boolean pageFlag = this.isPage(args);
+        if (!pageFlag) {
+            result = ResultUtils.getFailureResponse("500", "未知异常", null);
+        } else {
+            EKnowPageRequest eKnowPageRequest = null;
+            // 如果是分页请求入参只有一个
+            if (args[0] instanceof EKnowPageRequest) {
+                eKnowPageRequest = (EKnowPageRequest) args[0];
+            }
+            if (args[0] instanceof CommonHttpPageRequest) {
+                eKnowPageRequest = ((CommonHttpPageRequest) args[0]).geteKnowRequest();
+            }
+            result = ResultUtils.getPageResponse("500", "未知异常", EnumResponseType.SYS_ERR, null, eKnowPageRequest);
+        }
+        return result;
+    }
+
+    private boolean isPage(Object[] args) {
+        if (args == null) {
+            return false;
+        } else {
+            Object[] fromArgs = args;
+            for (Object fromArg : fromArgs) {
+                if (fromArg instanceof EKnowPageRequest || fromArg instanceof CommonHttpPageRequest) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     private EKnowRequest initSystem(ProceedingJoinPoint jp) {
         EKnowRequest eKnowRequest = null;
         Object[] args = jp.getArgs();
 
         if (args != null && args.length != 0) {
+            // 标识是否为 EknowRequest
+            boolean ekFlage = false;
             for (Object arg : args) {
                 if (arg instanceof CommonRequest) {
+                    ekFlage = true;
                     log.info("Http服务: {},请求参数: {}", jp.getSignature().getName(), JSONUtil.parseObj(arg,false,true).setDateFormat("yyyy-MM-dd HH:mm:ss"));
                     CommonRequest var1 = (CommonRequest) arg;
                     eKnowRequest = var1.geteKnowRequest();
                 }
+            }
+            if (!ekFlage) {
+                log.info("Http服务: {}, 请求参数: {}", jp.getSignature().getName(), JSONUtil.parseArray(args,false).setDateFormat("yyyy-MM-dd HH:mm:ss"));
             }
         } else {
             log.info("Http服务: {}", jp.getSignature().getName());

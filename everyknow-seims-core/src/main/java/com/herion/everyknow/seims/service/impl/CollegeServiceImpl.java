@@ -1,5 +1,6 @@
 package com.herion.everyknow.seims.service.impl;
 
+import com.herion.everyknow.common.exception.EKnowException;
 import com.herion.everyknow.seims.dao.ClazzDao;
 import com.herion.everyknow.seims.dao.CollegeDao;
 import com.herion.everyknow.seims.dao.DeptDao;
@@ -41,6 +42,9 @@ public class CollegeServiceImpl implements CollegeService {
 
     @Override
     public int insert(College college) {
+        if (collegeDao.queryByCode(college.getCollegeCode()) != null) {
+            throw new EKnowException("已存在同 code 的学院");
+        }
         return collegeDao.insert(college);
     }
 
@@ -48,6 +52,10 @@ public class CollegeServiceImpl implements CollegeService {
     public int update(College college) {
         College oldCollege = collegeDao.queryById(college.getId());
         if (!college.getCollegeCode().equals(oldCollege.getCollegeCode())) {
+            if (collegeDao.queryByCode(college.getCollegeCode()) != null) {
+                throw new EKnowException("已存在同 code 的学院");
+            }
+
             Dept newDept = new Dept();
             newDept.setCollegeCode(college.getCollegeCode());
             deptDao.updateCollegeCode(newDept, oldCollege.getCollegeCode());
@@ -72,4 +80,15 @@ public class CollegeServiceImpl implements CollegeService {
         clazzDao.delete(clazz);
         return collegeDao.deleteById(id);
     }
+
+    @Override
+    public List<College> queryByName(String collegeName) {
+        return collegeDao.queryByName(collegeName);
+    }
+
+    @Override
+    public College queryByCode(String collegeCode) {
+        return collegeDao.queryByCode(collegeCode);
+    }
+
 }

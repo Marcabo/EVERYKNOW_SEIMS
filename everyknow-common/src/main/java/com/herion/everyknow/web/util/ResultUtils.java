@@ -25,13 +25,31 @@ public class ResultUtils {
         return response;
     }
 
-    private static <T> EKnowPageRequest getPageResponse(T t, EKnowPageRequest page) {
+    public static <T> EKnowPageResponse<T> getPageResponse(T t, EKnowPageRequest page) {
         EKnowPageResponse<T> response = new EKnowPageResponse<>();
         response.setReturnObject(t);
         response.setStart(page.getStart());
         response.setPageSize(page.getPageSize());
         response.setTotalCount(page.getTotalCount());
         response.setReturnDate(new Date());
+        return response;
+    }
+
+    /**
+     * 返回默认返回对象
+     * @param respCode
+     * @param respMsg
+     * @param responseType
+     * @param t
+     * @param request
+     * @param <T>
+     * @return
+     */
+    public static <T>EKnowPageResponse<T> getPageResponse(String respCode,String respMsg,EnumResponseType responseType,T t,EKnowPageRequest request){
+        EKnowPageResponse<T> response  = ResultUtils.getPageResponse(t,request);
+        response.setResponseType(responseType);
+        response.setRespCode(respCode);
+        response.setRespMsg(respMsg);
         return response;
     }
 
@@ -51,7 +69,37 @@ public class ResultUtils {
         return response;
     }
 
-//    public static <T> EKnowPageResponse<T> getSuccessPageResponse()
+    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, EKnowPageRequest page) {
+        EKnowPageResponse<T> response = getPageResponse(t, page);
+        response.setResponseType(EnumResponseType.SUCCESS);
+        response.setRespMsg("请求成功");
+        response.setRespCode("200");
+        return response;
+    }
+
+    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, long start, long totalCount) {
+        EKnowPageRequest eKnowPageRequest = new EKnowPageRequest(start, totalCount);
+        EKnowPageResponse<T> response = getPageResponse(t, eKnowPageRequest);
+        response.setPage(eKnowPageRequest.getCurrentPageNo());
+        response.setResponseType(EnumResponseType.SUCCESS);
+        response.setRespMsg("请求成功");
+        response.setRespCode("200");
+        response.setReturnDate(new Date());
+        return response;
+    }
+
+    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, long start, int pageSize, long totalCount) {
+        EKnowPageRequest eKnowPageRequest = new EKnowPageRequest(start, totalCount, pageSize);
+        EKnowPageResponse<T> response = getPageResponse(t, eKnowPageRequest);
+        response.setPage(eKnowPageRequest.getCurrentPageNo());
+        response.setResponseType(EnumResponseType.SUCCESS);
+        response.setRespMsg("请求成功");
+        response.setRespCode("200");
+        response.setReturnDate(new Date());
+        return response;
+    }
+
+
 
     public static <T> EKnowResponse<T> getFailureResponse(T t) {
         EKnowResponse<T> response = getResponse(t);

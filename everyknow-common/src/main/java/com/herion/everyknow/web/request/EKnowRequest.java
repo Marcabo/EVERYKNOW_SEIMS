@@ -2,6 +2,7 @@ package com.herion.everyknow.web.request;
 
 import com.herion.everyknow.web.enums.EnumOrganId;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,8 +13,15 @@ import java.util.Date;
  */
 public class EKnowRequest implements Serializable {
     private static final long serialVersionUID = -7742188806569152013L;
+    /**
+     * 机构Id(必填)
+     */
+    @NotEmpty(message = "机构Id不能为空")
     private EnumOrganId organId;
 
+    /**
+     * 请求日期
+     */
     private Date requestDate;
 
 

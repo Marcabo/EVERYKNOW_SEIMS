@@ -45,4 +45,19 @@ public class CollegeDaoImpl implements CollegeDao {
     public int deleteById(Integer id) {
         return mapper.deleteById(id);
     }
+
+    @Override
+    public List<College> queryByName(String collegeName) {
+        LambdaQueryWrapper<College> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(College::getCollegeName, collegeName);
+        return mapper.selectList(wrapper);
+    }
+
+    @Override
+    public College queryByCode(String collegeCode) {
+        LambdaQueryWrapper<College> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(College::getCollegeCode, collegeCode);
+        return mapper.selectOne(wrapper);
+    }
+
 }

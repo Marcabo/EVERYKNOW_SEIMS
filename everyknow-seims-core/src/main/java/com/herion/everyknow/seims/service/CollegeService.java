@@ -50,4 +50,19 @@ public interface CollegeService {
      */
     int deleteById(Integer id);
 
+    /**
+     * 模糊查询
+     * @param collegeName
+     * @return
+     */
+    List<College> queryByName(String collegeName);
+
+
+    /**
+     * 根据 code 查询
+     * @param collegeCode
+     * @return
+     */
+    College queryByCode(String collegeCode);
+
 }
