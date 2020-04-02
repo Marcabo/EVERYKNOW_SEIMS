@@ -34,8 +34,8 @@ public class ClazzDaoImpl implements ClazzDao {
     }
 
     @Override
-    public List<Clazz> queryList(Clazz clazz) {
-        return mapper.selectList(this.createWrapper(clazz));
+    public List<Clazz> queryListLike(Clazz clazz) {
+        return mapper.selectList(this.createLikeWrapper(clazz));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ClazzDaoImpl implements ClazzDao {
         return mapper.delete(this.createWrapper(clazz));
     }
 
-    public LambdaQueryWrapper<Clazz> createWrapper(Clazz clazz) {
+    private LambdaQueryWrapper<Clazz> createWrapper(Clazz clazz) {
         LambdaQueryWrapper<Clazz> wrapper = new LambdaQueryWrapper<>();
         if (clazz.getId() != null) {
             wrapper.eq(Clazz::getId, clazz.getId());
@@ -86,8 +86,22 @@ public class ClazzDaoImpl implements ClazzDao {
         if (StrUtil.isNotBlank(clazz.getDeptCode())) {
             wrapper.eq(Clazz::getDeptCode, clazz.getDeptCode());
         }
-        if (clazz.getEntrySession() != null) {
-            wrapper.eq(Clazz::getEntrySession, clazz.getEntrySession());
+        return wrapper;
+    }
+
+    private LambdaQueryWrapper<Clazz> createLikeWrapper(Clazz clazz) {
+        LambdaQueryWrapper<Clazz> wrapper = new LambdaQueryWrapper<>();
+        if (clazz.getId() != null) {
+            wrapper.eq(Clazz::getId, clazz.getId());
+        }
+        if (StrUtil.isNotBlank(clazz.getClazzName())) {
+            wrapper.like(Clazz::getClazzName, clazz.getClazzName());
+        }
+        if (StrUtil.isNotBlank(clazz.getCollegeCode())) {
+            wrapper.eq(Clazz::getCollegeCode, clazz.getCollegeCode());
+        }
+        if (StrUtil.isNotBlank(clazz.getDeptCode())) {
+            wrapper.eq(Clazz::getDeptCode, clazz.getDeptCode());
         }
         return wrapper;
     }

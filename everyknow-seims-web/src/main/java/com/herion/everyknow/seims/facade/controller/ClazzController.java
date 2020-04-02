@@ -2,9 +2,7 @@ package com.herion.everyknow.seims.facade.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.herion.everyknow.seims.dao.entity.Clazz;
-import com.herion.everyknow.seims.dao.entity.Dept;
 import com.herion.everyknow.seims.facade.request.ClazzRequest;
-import com.herion.everyknow.seims.facade.request.DeptRequest;
 import com.herion.everyknow.seims.service.ClazzService;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
 import com.herion.everyknow.web.response.EKnowResponse;
@@ -51,7 +49,16 @@ public class ClazzController {
     public EKnowResponse queryListByCollegeCode(@RequestBody CommonHttpRequest<ClazzRequest> request) {
         Clazz clazz = new Clazz();
         BeanUtil.copyProperties(request.getRequest(), clazz);
-        List<Clazz> query = clazzService.query(clazz);
+        List<Clazz> query = clazzService.queryLike(clazz);
+        return ResultUtils.getSuccessResponse(query);
+    }
+
+    @ApiOperation("根据条件(clazzName,deptCode,CollegeCode)获取班级列表(clazzName为模糊查询)")
+    @RequestMapping(value = "/queryListByCondition",method = RequestMethod.POST)
+    public EKnowResponse queryListByCondition(@RequestBody CommonHttpRequest<ClazzRequest> request) {
+        Clazz clazz = new Clazz();
+        BeanUtil.copyProperties(request.getRequest(), clazz);
+        List<Clazz> query = clazzService.queryLike(clazz);
         return ResultUtils.getSuccessResponse(query);
     }
 

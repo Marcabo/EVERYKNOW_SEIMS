@@ -35,7 +35,7 @@ public class DeptDaoImpl implements DeptDao {
 
     @Override
     public List<Dept> queryList(Dept dept) {
-        LambdaQueryWrapper<Dept> wrapper = this.createWrapper(dept);
+        LambdaQueryWrapper<Dept> wrapper = this.createLikeWrapper(dept);
         return mapper.selectList(wrapper);
     }
 
@@ -80,6 +80,24 @@ public class DeptDaoImpl implements DeptDao {
         }
         if (StrUtil.isNotBlank(dept.getDeptName())) {
             wrapper.eq(Dept::getDeptName, dept.getDeptName());
+        }
+        if (StrUtil.isNotBlank(dept.getDeptCode())) {
+            wrapper.eq(Dept::getDeptCode, dept.getDeptCode());
+        }
+        if (StrUtil.isNotBlank(dept.getCollegeCode())) {
+            wrapper.eq(Dept::getCollegeCode, dept.getCollegeCode());
+        }
+
+        return wrapper;
+    }
+
+    private LambdaQueryWrapper<Dept> createLikeWrapper(Dept dept) {
+        LambdaQueryWrapper<Dept> wrapper = new LambdaQueryWrapper<>();
+        if (dept.getId() != null) {
+            wrapper.eq(Dept::getId, dept.getId());
+        }
+        if (StrUtil.isNotBlank(dept.getDeptName())) {
+            wrapper.like(Dept::getDeptName, dept.getDeptName());
         }
         if (StrUtil.isNotBlank(dept.getDeptCode())) {
             wrapper.eq(Dept::getDeptCode, dept.getDeptCode());

@@ -14,7 +14,7 @@ import lombok.ToString;
 /**
  * @Description ${description}
  * @auther wubo25320
- * @create 2020-03-24 11:09
+ * @create 2020-04-02 13:30
  */
 @ApiModel(value = "com-herion-everyknow-seims-dao-entity-Clazz")
 @Getter
@@ -22,6 +22,7 @@ import lombok.ToString;
 @ToString
 @TableName(value = "clazz")
 public class Clazz implements Serializable {
+    public static final String COL_ENTRY_SESSION = "entry_session";
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "")
     private Integer id;
@@ -47,13 +48,6 @@ public class Clazz implements Serializable {
     @ApiModelProperty(value = "学院 code")
     private String collegeCode;
 
-    /**
-     * 班级所在届
-     */
-    @TableField(value = "entry_session")
-    @ApiModelProperty(value = "班级所在届")
-    private Integer entrySession;
-
     private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";
@@ -63,6 +57,4 @@ public class Clazz implements Serializable {
     public static final String COL_DEPT_CODE = "dept_code";
 
     public static final String COL_COLLEGE_CODE = "college_code";
-
-    public static final String COL_ENTRY_SESSION = "entry_session";
 }

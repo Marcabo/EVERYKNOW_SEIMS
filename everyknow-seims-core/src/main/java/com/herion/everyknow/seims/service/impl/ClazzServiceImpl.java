@@ -30,8 +30,8 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public List<Clazz> query(Clazz clazz) {
-        return clazzDao.queryList(clazz);
+    public List<Clazz> queryLike(Clazz clazz) {
+        return clazzDao.queryListLike(clazz);
     }
 
     @Override

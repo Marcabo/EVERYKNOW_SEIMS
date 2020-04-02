@@ -58,6 +58,7 @@ public class DeptController {
         return ResultUtils.getSuccessResponse(dept);
     }
 
+    @Deprecated
     @ApiOperation("根据 collegeCode 获取专业列表")
     @RequestMapping(value = "/queryListByCollegeCode",method = RequestMethod.POST)
     public EKnowResponse queryListByCollegeCode(@RequestBody CommonHttpRequest<DeptRequest> request) {
@@ -75,10 +76,15 @@ public class DeptController {
         return ResultUtils.getSuccessResponse(responseList);
     }
 
-    @ApiOperation("根据 deptName 模糊查询专业列表")
-    @RequestMapping(value = "/queryByName",method = RequestMethod.POST)
-    public EKnowResponse queryByName(@RequestBody CommonHttpRequest<DeptRequest> request) {
-        List<Dept> deptList = deptService.queryByName(request.getRequest().getDeptName());
+    @ApiOperation("条件查询(deptName 和 collegeCode)获取专业列表(deptName为模糊)")
+    @RequestMapping(value = "/queryListByCondition",method = RequestMethod.POST)
+    public EKnowResponse queryListByCondition(@RequestBody CommonHttpRequest<DeptRequest> request) {
+        Dept queryDept = new Dept();
+        // 条件
+        queryDept.setCollegeCode(request.getRequest().getCollegeCode());
+        queryDept.setDeptName(request.getRequest().getDeptName());
+
+        List<Dept> deptList = deptService.queryList(queryDept);
         List<DeptResponse> responseList = new ArrayList<>();
         DeptResponse deptResponse;
         for (Dept dept : deptList) {

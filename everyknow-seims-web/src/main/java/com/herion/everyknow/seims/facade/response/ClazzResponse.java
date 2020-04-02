@@ -1,19 +1,22 @@
-package com.herion.everyknow.seims.facade.request;
+package com.herion.everyknow.seims.facade.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * @Description ${description}
+ * @Description 班级 Response
  * @auther wubo25320
- * @create 2020-03-24 11:09
+ * @create 2020-04-02 11:42
  */
-@ApiModel(value = "ClazzRequest")
+@ApiModel(value = "com-herion-everyknow-seims-dao-entity-Clazz")
 @Getter
 @Setter
-public class ClazzRequest {
+@ToString
+public class ClazzResponse {
+
     @ApiModelProperty(value = "")
     private Integer id;
 
@@ -30,8 +33,21 @@ public class ClazzRequest {
     private String deptCode;
 
     /**
+     * 专业名称
+     */
+    @ApiModelProperty(value = "专业名称")
+    private String deptName;
+
+    /**
      * 学院 code
      */
     @ApiModelProperty(value = "学院 code")
     private String collegeCode;
+
+    /**
+     * 学院名称
+     */
+    @ApiModelProperty(value = "学院名称")
+    private String collegeName;
+
 }

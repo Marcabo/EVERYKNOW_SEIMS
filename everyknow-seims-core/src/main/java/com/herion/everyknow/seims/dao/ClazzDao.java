@@ -32,7 +32,7 @@ public interface ClazzDao {
      * @param clazz
      * @return
      */
-    List<Clazz> queryList(Clazz clazz);
+    List<Clazz> queryListLike(Clazz clazz);
 
     /**
      * 新增数据

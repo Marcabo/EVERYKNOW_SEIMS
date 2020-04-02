@@ -30,7 +30,7 @@ public interface ClazzService{
      * @param clazz
      * @return
      */
-    List<Clazz> query(Clazz clazz);
+    List<Clazz> queryLike(Clazz clazz);
 
     /**
      * 根据id删除

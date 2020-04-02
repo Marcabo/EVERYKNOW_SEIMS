@@ -8,10 +8,9 @@
     <result column="clazz_name" jdbcType="VARCHAR" property="clazzName" />
     <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
     <result column="college_code" jdbcType="VARCHAR" property="collegeCode" />
-    <result column="entry_session" jdbcType="INTEGER" property="entrySession" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, clazz_name, dept_code, college_code, entry_session
+    id, clazz_name, dept_code, college_code
   </sql>
 </mapper>
