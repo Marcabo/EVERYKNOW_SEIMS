@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.Clazz;
 import com.herion.everyknow.seims.facade.request.ClazzRequest;
+import com.herion.everyknow.seims.facade.response.ClazzResponse;
 import com.herion.everyknow.seims.facade.utils.PageUtil;
 import com.herion.everyknow.seims.service.ClazzService;
+import com.herion.everyknow.seims.service.CollegeService;
+import com.herion.everyknow.seims.service.DeptService;
 import com.herion.everyknow.web.request.EKnowPageRequest;
 import com.herion.everyknow.web.request.http.CommonHttpPageRequest;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,19 +39,26 @@ import java.util.List;
 public class ClazzController {
 
     @Autowired
+    private CollegeService collegeService;
+
+    @Autowired
+    private DeptService deptService;
+
+    @Autowired
     private ClazzService clazzService;
 
-    @ApiOperation("获取全部班级")
-    @RequestMapping(value = "/queryAll",method = RequestMethod.POST)
-    public EKnowResponse queryAll() {
-        List<Clazz> clazzList = clazzService.queryAll();
-        return ResultUtils.getSuccessResponse(clazzList);
-    }
+//    @ApiOperation("获取全部班级")
+//    @RequestMapping(value = "/queryAll",method = RequestMethod.POST)
+//    public EKnowResponse queryAll() {
+//        List<Clazz> clazzList = clazzService.queryAll();
+//        return ResultUtils.getSuccessResponse(clazzList);
+//    }
 
     @ApiOperation("分页获取班级")
-    @RequestMapping(value = "page", method = RequestMethod.POST)
+    @RequestMapping(value = "/page", method = RequestMethod.POST)
     public EKnowPageResponse page(@RequestBody CommonHttpPageRequest<ClazzRequest> request) {
-        IPage<Clazz> clazzIPage = clazzService.queryPage(PageUtil.eKnow2Plus(request));
+        IPage clazzIPage = clazzService.queryPage(PageUtil.eKnow2Plus(request));
+        clazzIPage.setRecords(list2Response(clazzIPage.getRecords()));
         return PageUtil.plus2EKnow(clazzIPage);
     }
 
@@ -58,18 +69,18 @@ public class ClazzController {
         return ResultUtils.getSuccessResponse(clazz);
     }
 
-    @ApiOperation("根据条件获取班级列表")
-    @RequestMapping(value = "/queryListByCollegeCode",method = RequestMethod.POST)
-    public EKnowResponse queryListByCollegeCode(@RequestBody CommonHttpRequest<ClazzRequest> request) {
-        Clazz clazz = new Clazz();
-        BeanUtil.copyProperties(request.getRequest(), clazz);
-        List<Clazz> query = clazzService.queryLike(clazz);
-        return ResultUtils.getSuccessResponse(query);
-    }
+//    @ApiOperation("根据条件获取班级列表")
+//    @RequestMapping(value = "/queryListByCollegeCode",method = RequestMethod.POST)
+//    public EKnowResponse queryListByCollegeCode(@RequestBody CommonHttpRequest<ClazzRequest> request) {
+//        Clazz clazz = new Clazz();
+//        BeanUtil.copyProperties(request.getRequest(), clazz);
+//        List<Clazz> query = clazzService.queryLike(clazz);
+//        return ResultUtils.getSuccessResponse(query);
+//    }
 
     @ApiOperation("根据条件分页(clazzName,deptCode,CollegeCode)获取班级列表(clazzName为模糊查询)")
-    @RequestMapping(value = "/queryListByCondition",method = RequestMethod.POST)
-    public EKnowPageResponse queryListByCondition(@RequestBody CommonHttpPageRequest<ClazzRequest> request) {
+    @RequestMapping(value = "/queryPageByCondition",method = RequestMethod.POST)
+    public EKnowPageResponse queryPageByCondition(@RequestBody CommonHttpPageRequest<ClazzRequest> request) {
         Clazz clazz = new Clazz();
         BeanUtil.copyProperties(request.getRequest(), clazz);
         IPage<Clazz> clazzIPage = clazzService.queryPageLike(PageUtil.eKnow2Plus(request), clazz);
@@ -86,7 +97,7 @@ public class ClazzController {
     }
 
     @ApiOperation("更新班级信息")
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateById",method = RequestMethod.POST)
     public EKnowResponse update(@RequestBody CommonHttpRequest<ClazzRequest> request) {
         Clazz clazz = new Clazz();
         BeanUtil.copyProperties(request.getRequest(), clazz);
@@ -95,9 +106,25 @@ public class ClazzController {
     }
 
     @ApiOperation("删除班级信息")
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteById",method = RequestMethod.POST)
     public EKnowResponse delete(@RequestBody CommonHttpRequest<ClazzRequest> request) {
         clazzService.deleteById(request.getRequest().getId());
         return ResultUtils.getSuccessResponse(true);
+    }
+
+    private List<ClazzResponse> list2Response(List<Clazz> clazzList) {
+        List<ClazzResponse> result = new ArrayList<>();
+        for (Clazz clazz : clazzList) {
+            result.add(toResponse(clazz));
+        }
+        return result;
+    }
+
+    private ClazzResponse toResponse(Clazz clazz) {
+        ClazzResponse result = new ClazzResponse();
+        BeanUtil.copyProperties(clazz, result);
+        result.setCollegeName(collegeService.queryByCode(clazz.getCollegeCode()).getCollegeName());
+        result.setDeptName(deptService.queryByCode(clazz.getDeptCode()).getDeptName());
+        return result;
     }
 }

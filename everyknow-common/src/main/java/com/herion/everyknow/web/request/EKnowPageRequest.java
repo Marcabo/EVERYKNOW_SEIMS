@@ -13,7 +13,7 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
     /**
      * 默认每页行数
      */
-    private static int DEFAULT_PAGE_SIZE = 20;
+    private static int DEFAULT_PAGE_SIZE = 10;
 
     /**
      * 默认页面
