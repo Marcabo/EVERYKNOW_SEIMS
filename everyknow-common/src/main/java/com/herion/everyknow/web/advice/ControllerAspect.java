@@ -16,9 +16,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -214,7 +212,7 @@ public class ControllerAspect {
 
         if (result instanceof EKnowPageResponse) {
             EKnowPageResponse resultH = (EKnowPageResponse) result;
-            log.info("响应信息: respCode is {}, respMsg is {}, responseType is {}, returnDate is {}, currentPage is {}", resultH.getRespCode(), resultH.getRespMsg(), resultH.getResponseType(), resultH.getReturnDate(), resultH.getCurrentPageNo());
+            log.info("响应信息: respCode is {}, respMsg is {}, responseType is {}, returnDate is {}, currentPage is {}", resultH.getRespCode(), resultH.getRespMsg(), resultH.getResponseType(), resultH.getReturnDate(), resultH.getCurrent());
             if (resultH.getReturnObject() instanceof Collection) {
                 log.info("响应对象: returnObject is {}", JSONUtil.parseArray(resultH.getReturnObject(), false).setDateFormat("yyyy-MM-dd HH:mm:ss"));
             } else {

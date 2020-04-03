@@ -21,9 +21,9 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
     private static int DEFAULT_PAGE = 1;
 
     /**
-     * 当前页
+     * 页数
      */
-    private int page;
+    private long page;
     /**
      * 每页行数
      */
@@ -31,7 +31,7 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
     /**
      * 当前页第一条数据在 list 中的位置, 从 0 开始
      */
-    private long start;
+    private long current;
     /**
      * 总记录数
      */
@@ -40,53 +40,56 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
     public EKnowPageRequest() {
         this.page = DEFAULT_PAGE;
         this.pageSize = DEFAULT_PAGE_SIZE;
+        this.current = 1L;
+        this.totalCount = 0L;
     }
 
     /**
-     * 起始行数（默认从0行开始计算）（默认20行一页）
-     * 例：首次查询，行数为0，再次查询第2页，行数为20
      *
-     * @param start 起始行数   可以使用方法计算：HsjryPageRequest.getStartOfPage(int pageNo)
+     * @param current 当前页码
      */
-    public EKnowPageRequest(int start) {
-        this(start, 0L, DEFAULT_PAGE_SIZE);
+    public EKnowPageRequest(int current) {
+        this(current, 0L, DEFAULT_PAGE_SIZE);
     }
 
     /**
-     * 起始行数（默认从0行开始计算）
-     * 例：首次查询，行数为0，再次查询第2页，行数为 HsjryPageRequest.getStartOfPage(2, int pageSize)
      *
-     * @param start    可以使用方法计算：HsjryPageRequest.getStartOfPage(int pageNo, int pageSize)
+     * @param current    当前页码
      * @param pageSize
      */
-    public EKnowPageRequest(long start, int pageSize) {
-        this(start,0L, pageSize);
+    public EKnowPageRequest(long current, int pageSize) {
+        this(current,0L, pageSize);
     }
 
-    public EKnowPageRequest(long start, long totalCount) {
-        this(start,totalCount,DEFAULT_PAGE_SIZE);
+    public EKnowPageRequest(long current, long totalCount) {
+        this(current,totalCount,DEFAULT_PAGE_SIZE);
     }
 
     /**
      * 默认构造方法.
      *
-     * @param start     本页数据在数据库中的起始位置
+     * @param current     本页数据在数据库中的起始位置
      * @param totalCount 数据库中总记录条数
      * @param pageSize  本页容量
      */
-    public EKnowPageRequest(long start, long totalCount, int pageSize) {
+    public EKnowPageRequest(long current, long totalCount, int pageSize) {
         this.page = DEFAULT_PAGE;
         this.pageSize = DEFAULT_PAGE_SIZE;
-        this.pageSize = pageSize;
-        this.start = start;
+        if (pageSize > 0 && pageSize <= 500) {
+            this.pageSize = pageSize;
+        }
+        this.current = 1L;
+        if (current > 1) {
+            this.current = current;
+        }
         this.totalCount = totalCount;
     }
 
-    public int getPage() {
+    public long getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(long page) {
         this.page = page;
     }
 
@@ -96,14 +99,6 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
-    }
-
-    public long getStart() {
-        return start;
-    }
-
-    public void setStart(long start) {
-        this.start = start;
     }
 
     /**
@@ -118,54 +113,51 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
         this.totalCount = totalCount;
     }
 
-    /**
-     * 取总页数
-     * @return
-     */
-    public long getTotalPageCount() {
-        return  this.pageSize <= 0 ? 0L : (this.totalCount + (long)this.pageSize - 1L) / this.pageSize;
+    public void setCurrent(long current) {
+        this.current = current;
     }
 
     /**
      * 取当前页码, 页码从 1 开始
      * @return
      */
-    public int getCurrentPageNo() {
-        return (int)(this.start / (long)this.pageSize + 1L);
+    public long getCurrent() {
+        return this.current;
     }
 
     /**
      * 该页是否有下一页
      * @return
      */
-    public boolean hasNextPage() {
-        return (long)this.getCurrentPageNo() < this.getTotalPageCount();
+
+    public boolean isHasNextPage() {
+        return (long)this.getCurrent() < this.getPage();
     }
 
     /**
      * 该页是否有上一页
      * @return
      */
-    public boolean hasPreviousPage() {
-        return this.getCurrentPageNo() > 1;
+    public boolean isHasPreviousPage() {
+        return this.getCurrent() > 1;
     }
 
     /**
      * 获取任一页第一条数据在数据集的位置.
-     * @param pageNo
+     * @param currentPageNo
      * @param pageSize
      * @return
      */
-    public static int getStartOfPage(int pageNo, int pageSize) {
-        return (pageNo -1) * pageSize;
+    public static int getStartOfPage(int currentPageNo, int pageSize) {
+        return (currentPageNo -1) * pageSize;
     }
 
     /**
      * 获取任一页第一条数据在数据集的位置，每页条数使用默认值.
-     * @param pageNo
+     * @param currentPageNo
      * @return
      */
-    protected static int getStartOfPage(int pageNo) {
-        return getStartOfPage(pageNo, DEFAULT_PAGE_SIZE);
+    protected static int getStartOfPage(int currentPageNo) {
+        return getStartOfPage(currentPageNo, DEFAULT_PAGE_SIZE);
     }
 }

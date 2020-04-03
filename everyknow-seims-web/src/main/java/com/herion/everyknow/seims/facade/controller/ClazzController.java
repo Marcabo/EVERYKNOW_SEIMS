@@ -1,10 +1,17 @@
 package com.herion.everyknow.seims.facade.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.Clazz;
 import com.herion.everyknow.seims.facade.request.ClazzRequest;
+import com.herion.everyknow.seims.facade.utils.PageUtil;
 import com.herion.everyknow.seims.service.ClazzService;
+import com.herion.everyknow.web.request.EKnowPageRequest;
+import com.herion.everyknow.web.request.http.CommonHttpPageRequest;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
+import com.herion.everyknow.web.response.EKnowPageResponse;
 import com.herion.everyknow.web.response.EKnowResponse;
 import com.herion.everyknow.web.util.ResultUtils;
 import io.swagger.annotations.Api;
@@ -37,6 +44,13 @@ public class ClazzController {
         return ResultUtils.getSuccessResponse(clazzList);
     }
 
+    @ApiOperation("分页获取班级")
+    @RequestMapping(value = "page", method = RequestMethod.POST)
+    public EKnowPageResponse page(@RequestBody CommonHttpPageRequest<ClazzRequest> request) {
+        IPage<Clazz> clazzIPage = clazzService.queryPage(PageUtil.eKnow2Plus(request));
+        return PageUtil.plus2EKnow(clazzIPage);
+    }
+
     @ApiOperation("根据 id 获取班级")
     @RequestMapping(value = "/queryById",method = RequestMethod.POST)
     public EKnowResponse queryById(@RequestBody CommonHttpRequest<ClazzRequest> request) {
@@ -53,13 +67,13 @@ public class ClazzController {
         return ResultUtils.getSuccessResponse(query);
     }
 
-    @ApiOperation("根据条件(clazzName,deptCode,CollegeCode)获取班级列表(clazzName为模糊查询)")
+    @ApiOperation("根据条件分页(clazzName,deptCode,CollegeCode)获取班级列表(clazzName为模糊查询)")
     @RequestMapping(value = "/queryListByCondition",method = RequestMethod.POST)
-    public EKnowResponse queryListByCondition(@RequestBody CommonHttpRequest<ClazzRequest> request) {
+    public EKnowPageResponse queryListByCondition(@RequestBody CommonHttpPageRequest<ClazzRequest> request) {
         Clazz clazz = new Clazz();
         BeanUtil.copyProperties(request.getRequest(), clazz);
-        List<Clazz> query = clazzService.queryLike(clazz);
-        return ResultUtils.getSuccessResponse(query);
+        IPage<Clazz> clazzIPage = clazzService.queryPageLike(PageUtil.eKnow2Plus(request), clazz);
+        return PageUtil.plus2EKnow(clazzIPage);
     }
 
     @ApiOperation("插入班级信息")

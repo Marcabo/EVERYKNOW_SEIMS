@@ -1,5 +1,7 @@
 package com.herion.everyknow.seims.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.Clazz;
 
 import java.util.List;
@@ -26,11 +28,26 @@ public interface ClazzService{
     List<Clazz> queryAll();
 
     /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    IPage<Clazz> queryPage(Page page);
+
+    /**
      * 条件查询
      * @param clazz
      * @return
      */
     List<Clazz> queryLike(Clazz clazz);
+
+    /**
+     * 分页条件查询
+     * @param page
+     * @param clazz
+     * @return
+     */
+    IPage<Clazz> queryPageLike(Page page, Clazz clazz);
 
     /**
      * 根据id删除

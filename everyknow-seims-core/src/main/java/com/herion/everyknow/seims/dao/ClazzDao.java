@@ -1,5 +1,7 @@
 package com.herion.everyknow.seims.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.Clazz;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -81,4 +83,17 @@ public interface ClazzDao {
      */
     int delete(Clazz clazz);
 
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    IPage<Clazz> queryPage(Page page);
+
+    /**
+     * 分页条件查询(通过实体作为筛选条件)
+     * @param clazz
+     * @return
+     */
+    IPage<Clazz> queryPageListLike(Page page, Clazz clazz);
 }

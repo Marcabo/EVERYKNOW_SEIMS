@@ -25,10 +25,11 @@ public class ResultUtils {
         return response;
     }
 
-    public static <T> EKnowPageResponse<T> getPageResponse(T t, EKnowPageRequest page) {
+    private static <T> EKnowPageResponse<T> getPageResponse(T t, EKnowPageRequest page) {
         EKnowPageResponse<T> response = new EKnowPageResponse<>();
         response.setReturnObject(t);
-        response.setStart(page.getStart());
+        response.setPage(page.getPage());
+        response.setCurrent(page.getCurrent());
         response.setPageSize(page.getPageSize());
         response.setTotalCount(page.getTotalCount());
         response.setReturnDate(new Date());
@@ -77,10 +78,9 @@ public class ResultUtils {
         return response;
     }
 
-    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, long start, long totalCount) {
-        EKnowPageRequest eKnowPageRequest = new EKnowPageRequest(start, totalCount);
+    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, long current, long totalCount) {
+        EKnowPageRequest eKnowPageRequest = new EKnowPageRequest(current, totalCount);
         EKnowPageResponse<T> response = getPageResponse(t, eKnowPageRequest);
-        response.setPage(eKnowPageRequest.getCurrentPageNo());
         response.setResponseType(EnumResponseType.SUCCESS);
         response.setRespMsg("请求成功");
         response.setRespCode("200");
@@ -88,10 +88,10 @@ public class ResultUtils {
         return response;
     }
 
-    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, long start, int pageSize, long totalCount) {
-        EKnowPageRequest eKnowPageRequest = new EKnowPageRequest(start, totalCount, pageSize);
+    public static <T> EKnowPageResponse<T> getSuccessPageResponse(T t, long current, int pageSize, long totalCount) {
+        EKnowPageRequest eKnowPageRequest = new EKnowPageRequest(current, totalCount, pageSize);
         EKnowPageResponse<T> response = getPageResponse(t, eKnowPageRequest);
-        response.setPage(eKnowPageRequest.getCurrentPageNo());
+        response.setPage(eKnowPageRequest.getPage());
         response.setResponseType(EnumResponseType.SUCCESS);
         response.setRespMsg("请求成功");
         response.setRespCode("200");

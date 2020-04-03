@@ -1,5 +1,7 @@
 package com.herion.everyknow.seims.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.ClazzDao;
 import com.herion.everyknow.seims.service.ClazzService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +32,18 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
+    public IPage<Clazz> queryPage(Page page) {
+        return clazzDao.queryPage(page);
+    }
+
+    @Override
     public List<Clazz> queryLike(Clazz clazz) {
         return clazzDao.queryListLike(clazz);
+    }
+
+    @Override
+    public IPage<Clazz> queryPageLike(Page page, Clazz clazz) {
+        return clazzDao.queryPageListLike(page, clazz);
     }
 
     @Override

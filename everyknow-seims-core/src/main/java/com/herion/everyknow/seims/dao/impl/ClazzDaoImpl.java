@@ -3,6 +3,8 @@ package com.herion.everyknow.seims.dao.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.ClazzDao;
 import com.herion.everyknow.seims.dao.entity.Clazz;
 import com.herion.everyknow.seims.dao.mapper.ClazzMapper;
@@ -70,6 +72,16 @@ public class ClazzDaoImpl implements ClazzDao {
     @Override
     public int delete(Clazz clazz) {
         return mapper.delete(this.createWrapper(clazz));
+    }
+
+    @Override
+    public IPage<Clazz> queryPage(Page page) {
+        return mapper.selectPage(page, new LambdaQueryWrapper<>());
+    }
+
+    @Override
+    public IPage<Clazz> queryPageListLike(Page page, Clazz clazz) {
+        return mapper.selectPage(page, this.createLikeWrapper(clazz));
     }
 
     private LambdaQueryWrapper<Clazz> createWrapper(Clazz clazz) {
