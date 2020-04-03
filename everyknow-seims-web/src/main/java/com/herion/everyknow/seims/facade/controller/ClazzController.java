@@ -96,6 +96,23 @@ public class ClazzController {
         return ResultUtils.getSuccessResponse(true);
     }
 
+    @ApiOperation("批量插入班级信息")
+    @RequestMapping(value = "/insertBatch",method = RequestMethod.POST)
+    public EKnowResponse insertBatch(@RequestBody CommonHttpRequest<ClazzRequest> request) {
+        String[] nameList = request.getRequest().getClazzName().split(",");
+        ArrayList<Clazz> clazzList = new ArrayList<>();
+        Clazz clazz = null;
+        for (String name : nameList) {
+            clazz = new Clazz();
+            clazz.setClazzName(name);
+            clazz.setCollegeCode(request.getRequest().getCollegeCode());
+            clazz.setDeptCode(request.getRequest().getDeptCode());
+            clazzList.add(clazz);
+        }
+        clazzService.batchInsert(clazzList);
+        return ResultUtils.getSuccessResponse(true);
+    }
+
     @ApiOperation("更新班级信息")
     @RequestMapping(value = "/updateById",method = RequestMethod.POST)
     public EKnowResponse update(@RequestBody CommonHttpRequest<ClazzRequest> request) {

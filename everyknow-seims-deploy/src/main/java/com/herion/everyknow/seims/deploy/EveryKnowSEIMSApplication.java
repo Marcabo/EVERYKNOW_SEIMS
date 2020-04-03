@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication(scanBasePackages = {
         "com.herion.everyknow.seims.**"
 })
-@MapperScan("com.herion.everyknow.seims.dao.mapper")
 public class EveryKnowSEIMSApplication {
 
     // 配置全局 入参 出参 拦截

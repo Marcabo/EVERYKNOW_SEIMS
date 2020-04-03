@@ -1,4 +1,4 @@
-package com.herion.everyknow.seims.config;
+package com.herion.everyknow.seims.base;
 
 /**
  * @author zhangfanghao

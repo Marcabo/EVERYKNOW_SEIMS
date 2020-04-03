@@ -45,6 +45,13 @@ public interface ClazzDao {
     int insert(Clazz clazz);
 
     /**
+     * 批量插入
+     * @param clazzList
+     * @return
+     */
+    int batchInsert(List<Clazz> clazzList);
+
+    /**
      * 修改数据
      *
      * @param clazz 实例对象

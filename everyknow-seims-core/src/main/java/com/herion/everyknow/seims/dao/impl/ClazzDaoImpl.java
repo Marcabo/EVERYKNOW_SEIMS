@@ -46,6 +46,11 @@ public class ClazzDaoImpl implements ClazzDao {
     }
 
     @Override
+    public int batchInsert(List<Clazz> clazzList) {
+        return mapper.insertBatchSomeColumn(clazzList);
+    }
+
+    @Override
     public int updateById(Clazz clazz) {
         return mapper.updateById(clazz);
     }

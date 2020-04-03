@@ -57,6 +57,11 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
+    public int batchInsert(List<Clazz> clazzList) {
+        return clazzDao.batchInsert(clazzList);
+    }
+
+    @Override
     public int update(Clazz record) {
         return clazzDao.updateById(record);
     }

@@ -64,6 +64,13 @@ public interface ClazzService{
     int insert(Clazz record);
 
     /**
+     * 批量插入
+     * @param clazzList
+     * @return
+     */
+    int batchInsert(List<Clazz> clazzList);
+
+    /**
      * 根据 id 更新
      * @param record
      * @return

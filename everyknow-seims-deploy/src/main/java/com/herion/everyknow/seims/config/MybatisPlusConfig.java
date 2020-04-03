@@ -1,7 +1,10 @@
 package com.herion.everyknow.seims.config;
 
+import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.herion.everyknow.seims.base.MySqlInjector;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +14,13 @@ import org.springframework.context.annotation.Configuration;
  * @create 2020-04-02 22:35
  */
 @Configuration
+@MapperScan("com.herion.everyknow.seims.dao.mapper")
 public class MybatisPlusConfig {
 
+    /**
+     * 配置分页插件
+     * @return
+     */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
@@ -24,4 +32,14 @@ public class MybatisPlusConfig {
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
         return paginationInterceptor;
     }
+
+    /**
+     * 配置选装件.具体添加的选装件见 MySqlInjector
+     * @return
+     */
+    @Bean
+    public DefaultSqlInjector sqlInjector() {
+        return new MySqlInjector();
+    }
+
 }

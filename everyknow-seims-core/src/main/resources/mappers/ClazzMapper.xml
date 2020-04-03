@@ -13,4 +13,7 @@
     <!--@mbg.generated-->
     id, clazz_name, dept_code, college_code
   </sql>
+
+<!--  仅仅为了方法不报错  -->
+  <insert id="insertBatchSomeColumn"></insert>
 </mapper>
