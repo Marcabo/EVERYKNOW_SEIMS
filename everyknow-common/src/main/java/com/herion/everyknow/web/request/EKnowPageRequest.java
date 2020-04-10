@@ -86,7 +86,7 @@ public class EKnowPageRequest extends EKnowRequest implements Serializable {
     }
 
     public long getPage() {
-        return page;
+        return this.totalCount / this.pageSize + 1;
     }
 
     public void setPage(long page) {
