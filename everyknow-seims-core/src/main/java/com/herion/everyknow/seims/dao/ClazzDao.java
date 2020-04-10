@@ -23,6 +23,13 @@ public interface ClazzDao {
     Clazz queryById(Integer id);
 
     /**
+     * 通过 名称 查询班级(模糊)
+     * @param clazzName
+     * @return
+     */
+    List<Clazz> queryByName(String clazzName);
+
+    /**
      * 通过实体作为筛选条件查询
      *
      * @return 对象列表

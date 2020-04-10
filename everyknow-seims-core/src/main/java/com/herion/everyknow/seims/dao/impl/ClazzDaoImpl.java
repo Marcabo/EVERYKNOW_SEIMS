@@ -31,6 +31,13 @@ public class ClazzDaoImpl implements ClazzDao {
     }
 
     @Override
+    public List<Clazz> queryByName(String clazzName) {
+        LambdaQueryWrapper<Clazz> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(Clazz::getClazzName, clazzName);
+        return mapper.selectList(wrapper);
+    }
+
+    @Override
     public List<Clazz> queryAll() {
         return mapper.selectList(new LambdaQueryWrapper<Clazz>());
     }

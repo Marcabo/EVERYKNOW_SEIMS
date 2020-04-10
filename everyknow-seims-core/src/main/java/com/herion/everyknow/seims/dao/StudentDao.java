@@ -62,4 +62,11 @@ public interface StudentDao {
      */
     int deleteById(Integer id);
 
+    /**
+     * 批量插入
+     * @param list
+     * @return
+     */
+    int insertBatch(List<Student> list);
+
 }

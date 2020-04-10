@@ -146,7 +146,7 @@ public class ControllerAspect {
         Object result = null;
         boolean pageFlag = this.isPage(args);
         if (!pageFlag) {
-            result = ResultUtils.getFailureResponse("500", "未知异常", null);
+            result = ResultUtils.getFailureResponse("500", e.getClass().getName() + ": " + e.getMessage(), null);
         } else {
             EKnowPageRequest eKnowPageRequest = null;
             // 如果是分页请求入参只有一个

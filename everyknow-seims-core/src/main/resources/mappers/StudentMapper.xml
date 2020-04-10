@@ -18,21 +18,20 @@
     <result column="account_location_code" jdbcType="VARCHAR" property="accountLocationCode" />
     <result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
     <result column="education_background" jdbcType="VARCHAR" property="educationBackground" />
-    <result column="nation" jdbcType="INTEGER" property="nation" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="wechat_code" jdbcType="VARCHAR" property="wechatCode" />
     <result column="qq_code" jdbcType="VARCHAR" property="qqCode" />
     <result column="stu_email" jdbcType="VARCHAR" property="stuEmail" />
     <result column="stu_addr" jdbcType="VARCHAR" property="stuAddr" />
     <result column="entry_time" jdbcType="DATE" property="entryTime" />
-    <result column="graduation_session" jdbcType="DATE" property="graduationSession" />
-    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="graduation_session" jdbcType="VARCHAR" property="graduationSession" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, stu_id, stu_name, sex, birth_date, college_code, dept_code, clazz_id, politicalStatus, 
     identification_number, account_type, account_location_code, native_place, education_background, 
-    nation, phone, wechat_code, qq_code, stu_email, stu_addr, entry_time, graduation_session, 
-    `state`
+    nation, phone, wechat_code, qq_code, stu_email, stu_addr, entry_time, graduation_session
   </sql>
+    <insert id="insertBatchSomeColumn" />
 </mapper>

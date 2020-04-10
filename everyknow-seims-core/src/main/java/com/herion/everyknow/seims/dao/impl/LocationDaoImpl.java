@@ -40,4 +40,11 @@ public class LocationDaoImpl implements LocationDao {
         return mapper.selectList(wrapper);
     }
 
+    @Override
+    public List<Location> queryByCityName(String cityName) {
+        LambdaQueryWrapper<Location> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(Location::getCityName, cityName);
+        return mapper.selectList(wrapper);
+    }
+
 }

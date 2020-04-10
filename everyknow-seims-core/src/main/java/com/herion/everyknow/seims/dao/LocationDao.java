@@ -33,4 +33,11 @@ public interface LocationDao {
      * @return
      */
     List<Location> queryProvince(String provinceCode);
+
+    /**
+     * 通过城市名称查询 城市
+     * @param cityName
+     * @return
+     */
+    List<Location> queryByCityName(String cityName);
 }

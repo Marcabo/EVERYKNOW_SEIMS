@@ -42,7 +42,7 @@ public class LocationController {
     }
 
     @ApiOperation(value = "通过省份代码获取全部城市")
-    @RequestMapping(value = "/getCitys", method = RequestMethod.POST)
+    @RequestMapping(value = "/getCitys")
     public EKnowResponse getCitys(@RequestBody CommonHttpRequest<LocationRequest> request) {
         List<Location> locations = locationService.selectByProvince(request.getRequest().getProvinceCode());
         return ResultUtils.getSuccessResponse(locations);
