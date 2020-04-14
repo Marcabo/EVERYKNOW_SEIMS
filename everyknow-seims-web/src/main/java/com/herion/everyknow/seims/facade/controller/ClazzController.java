@@ -69,14 +69,14 @@ public class ClazzController {
         return ResultUtils.getSuccessResponse(clazz);
     }
 
-//    @ApiOperation("根据条件获取班级列表")
-//    @RequestMapping(value = "/queryListByCollegeCode",method = RequestMethod.POST)
-//    public EKnowResponse queryListByCollegeCode(@RequestBody CommonHttpRequest<ClazzRequest> request) {
-//        Clazz clazz = new Clazz();
-//        BeanUtil.copyProperties(request.getRequest(), clazz);
-//        List<Clazz> query = clazzService.queryLike(clazz);
-//        return ResultUtils.getSuccessResponse(query);
-//    }
+    @ApiOperation("根据 deptCode 获取班级列表")
+    @RequestMapping(value = "/queryListByDeptCode",method = RequestMethod.POST)
+    public EKnowResponse queryListByCollegeCode(@RequestBody CommonHttpRequest<ClazzRequest> request) {
+        Clazz clazz = new Clazz();
+        clazz.setDeptCode(request.getRequest().getDeptCode());
+        List<Clazz> query = clazzService.queryLike(clazz);
+        return ResultUtils.getSuccessResponse(query);
+    }
 
     @ApiOperation("根据条件分页(clazzName,deptCode,CollegeCode)获取班级列表(clazzName为模糊查询)")
     @RequestMapping(value = "/queryPageByCondition",method = RequestMethod.POST)

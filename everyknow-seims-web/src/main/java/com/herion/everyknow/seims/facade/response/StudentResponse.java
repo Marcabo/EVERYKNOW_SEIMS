@@ -1,29 +1,26 @@
-package com.herion.everyknow.seims.facade.request;
+package com.herion.everyknow.seims.facade.response;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description ${description}
+ * @Description 学生基本信息 Response
  * @auther wubo25320
- * @create 2020-04-05 12:00
+ * @create 2020-04-10 13:05
  */
-@ApiModel(value = "com-herion-everyknow-seims-dao-entity-Student")
+@ApiModel(value = "com-herion-everyknow-seims-facade-response-StudentResponse")
 @Getter
 @Setter
 @ToString
-public class StudentRequest implements Serializable {
-
+public class StudentResponse {
     /**
      * 主键
      */
@@ -61,16 +58,34 @@ public class StudentRequest implements Serializable {
     private String collegeCode;
 
     /**
+     * 学院名称
+     */
+    @ApiModelProperty(value = "学院名称")
+    private String collegeName;
+
+    /**
      * 专业编码
      */
     @ApiModelProperty(value = "专业编码")
     private String deptCode;
 
     /**
+     * 专业名称
+     */
+    @ApiModelProperty(value = "专业名称")
+    private String deptName;
+
+    /**
      * 班级id
      */
     @ApiModelProperty(value = "班级id")
     private Integer clazzId;
+
+    /**
+     * 班级名称
+     */
+    @ApiModelProperty(value = "班级名称")
+    private String clazzName;
 
     /**
      * 政治面貌

@@ -1,29 +1,34 @@
 package com.herion.everyknow.seims.facade.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import com.herion.everyknow.seims.dao.*;
-import com.herion.everyknow.seims.service.StudentService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.herion.everyknow.common.exception.EKnowException;
+import com.herion.everyknow.seims.dao.entity.Student;
+import com.herion.everyknow.seims.facade.request.StudentRequest;
+import com.herion.everyknow.seims.facade.response.StudentResponse;
+import com.herion.everyknow.seims.facade.utils.PageUtil;
+import com.herion.everyknow.seims.service.*;
 import com.herion.everyknow.seims.service.bean.StudentUpload;
 import com.herion.everyknow.seims.service.listener.StudentUploadListener;
+import com.herion.everyknow.web.request.http.CommonHttpPageRequest;
+import com.herion.everyknow.web.request.http.CommonHttpRequest;
+import com.herion.everyknow.web.response.EKnowPageResponse;
 import com.herion.everyknow.web.response.EKnowResponse;
 import com.herion.everyknow.web.util.ResultUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
@@ -44,6 +49,80 @@ public class StudentInformationController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private CollegeService collegeService;
+
+    @Autowired
+    private DeptService deptService;
+
+    @Autowired
+    private ClazzService clazzService;
+
+    @Autowired
+    private LocationService locationService;
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @ApiOperation("新增学生")
+    public EKnowResponse insert(@RequestBody CommonHttpRequest<StudentRequest> request) {
+        Student student = new Student();
+        BeanUtil.copyProperties(request.getRequest(), student);
+        studentService.insert(student);
+        return ResultUtils.getSuccessResponse(true);
+    }
+
+    @RequestMapping(value = "/updateById", method = RequestMethod.POST)
+    @ApiOperation("根据 id 修改学生信息")
+    public EKnowResponse updateById(@RequestBody CommonHttpRequest<StudentRequest> request) {
+        Student student = new Student();
+        BeanUtil.copyProperties(request.getRequest(), student);
+        studentService.updateById(student);
+        return ResultUtils.getSuccessResponse(true);
+    }
+
+    @RequestMapping(value = "/queryById", method = RequestMethod.POST)
+    @ApiOperation("根据 id 获取毕业生基本信息")
+    public EKnowResponse queryById(@RequestBody CommonHttpRequest<StudentRequest> request) {
+        Student student = studentService.queryById(request.getRequest().getId());
+        StudentResponse studentResponse = toResponse(student);
+        return ResultUtils.getSuccessResponse(studentResponse);
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.POST)
+    @ApiOperation("分页获取毕业生基本信息")
+    public EKnowPageResponse page(@RequestBody CommonHttpPageRequest<StudentRequest> request) {
+        // 学院,专业,班级,姓名(模糊),学号(模糊),身份证号(模糊),入学时间,毕业届数
+        // 查询接口前端传过来的 时间 都是 yyyy-MM-dd 格式的. 且都是 yyyy-01-01
+        Student student = new Student();
+        BeanUtil.copyProperties(request.getRequest(), student);
+        IPage studentIPage = studentService.queryPage(PageUtil.eKnow2Plus(request), student);
+        studentIPage.setRecords(this.toResponseList(studentIPage.getRecords()));
+        return PageUtil.plus2EKnow(studentIPage);
+    }
+
+    @RequestMapping(value = "/noEmployPage", method = RequestMethod.POST)
+    @ApiOperation("分页获取未就业毕业生基本信息")
+    public EKnowPageResponse noEmployPage(@RequestBody CommonHttpPageRequest<StudentRequest> request) {
+        // 学院,专业,班级,姓名(模糊),学号(模糊),身份证号(模糊),入学时间,毕业届数
+        // 查询接口前端传过来的 时间 都是 yyyy-MM-dd 格式的. 且都是 yyyy-01-01
+        Student student = new Student();
+        BeanUtil.copyProperties(request.getRequest(), student);
+        IPage studentIPage = studentService.queryNoEmployPage(PageUtil.eKnow2Plus(request), student);
+        studentIPage.setRecords(this.toResponseList(studentIPage.getRecords()));
+        return PageUtil.plus2EKnow(studentIPage);
+    }
+
+    @RequestMapping(value = "/noFilePage", method = RequestMethod.POST)
+    @ApiOperation("分页获取未登记档案毕业生基本信息")
+    public EKnowPageResponse noFilePage(@RequestBody CommonHttpPageRequest<StudentRequest> request) {
+        // 学院,专业,班级,姓名(模糊),学号(模糊),身份证号(模糊),入学时间,毕业届数
+        // 查询接口前端传过来的 时间 都是 yyyy-MM-dd 格式的. 且都是 yyyy-01-01
+        Student student = new Student();
+        BeanUtil.copyProperties(request.getRequest(), student);
+        IPage studentIPage = studentService.queryNoFilePage(PageUtil.eKnow2Plus(request), student);
+        studentIPage.setRecords(this.toResponseList(studentIPage.getRecords()));
+        return PageUtil.plus2EKnow(studentIPage);
+    }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public EKnowResponse upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
@@ -71,6 +150,23 @@ public class StudentInformationController {
         excelWriter.finish();
     }
 
+    private List<StudentResponse> toResponseList(List<Student> studentList) {
+        ArrayList<StudentResponse> responseList = new ArrayList<>();
+        for (Student student : studentList) {
+            responseList.add(toResponse(student));
+        }
+        return responseList;
+    }
+
+    private StudentResponse toResponse(Student student) {
+        StudentResponse studentResponse = new StudentResponse();
+        BeanUtil.copyProperties(student, studentResponse);
+        studentResponse.setCollegeName(collegeService.queryByCode(student.getCollegeCode()).getCollegeName());
+        studentResponse.setDeptName(deptService.queryByCode(student.getDeptCode()).getDeptName());
+        studentResponse.setClazzName(clazzService.queryById(student.getClazzId()).getClazzName());
+        return studentResponse;
+    }
+
     private List<StudentUpload> getExample() {
         ArrayList<StudentUpload> uploadArrayList = new ArrayList<>();
         StudentUpload studentUpload = StudentUpload.builder()
@@ -81,10 +177,10 @@ public class StudentInformationController {
                 .collegeName("软件学院")
                 .deptName("软件工程")
                 .clazz("软工161")
-                .politicalstatus("共青团员")
+                .politicalStatus("共青团员")
                 .identificationNumber(43028199703020838L)
                 .accountType("农村")
-                .nativePlace("湖北")
+                .nativePlace("湖北省")
                 .educationBackground("本科")
                 .nation("汉族")
                 .phone("15493437834")

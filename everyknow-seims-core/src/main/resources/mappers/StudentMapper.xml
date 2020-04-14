@@ -12,10 +12,10 @@
     <result column="college_code" jdbcType="VARCHAR" property="collegeCode" />
     <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
     <result column="clazz_id" jdbcType="INTEGER" property="clazzId" />
-    <result column="politicalStatus" jdbcType="VARCHAR" property="politicalstatus" />
+    <result column="political_status" jdbcType="VARCHAR" property="politicalStatus" />
     <result column="identification_number" jdbcType="BIGINT" property="identificationNumber" />
     <result column="account_type" jdbcType="VARCHAR" property="accountType" />
-    <result column="account_location_code" jdbcType="VARCHAR" property="accountLocationCode" />
+    <result column="account_location" jdbcType="VARCHAR" property="accountLocation" />
     <result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
     <result column="education_background" jdbcType="VARCHAR" property="educationBackground" />
     <result column="nation" jdbcType="VARCHAR" property="nation" />
@@ -29,8 +29,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, stu_id, stu_name, sex, birth_date, college_code, dept_code, clazz_id, politicalStatus, 
-    identification_number, account_type, account_location_code, native_place, education_background, 
+    id, stu_id, stu_name, sex, birth_date, college_code, dept_code, clazz_id, political_status, 
+    identification_number, account_type, account_location, native_place, education_background, 
     nation, phone, wechat_code, qq_code, stu_email, stu_addr, entry_time, graduation_session
   </sql>
     <insert id="insertBatchSomeColumn" />

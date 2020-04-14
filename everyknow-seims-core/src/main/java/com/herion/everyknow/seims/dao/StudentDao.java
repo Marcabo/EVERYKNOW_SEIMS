@@ -1,5 +1,7 @@
 package com.herion.everyknow.seims.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.Student;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -11,6 +13,30 @@ import java.util.List;
  * @since 2020-03-23 23:47:10
  */
 public interface StudentDao {
+
+    /**
+     * 根据条件分页查询学生列表
+     * @param page
+     * @param student
+     * @return
+     */
+    IPage<Student> queryPage(Page page, Student student);
+
+    /**
+     * 根据条件分页查询未就业学生列表
+     * @param page
+     * @param student
+     * @return
+     */
+    IPage<Student> queryNoEmployPage(Page page, Student student);
+
+    /**
+     * 根据条件分页查询未登记档案学生列表
+     * @param page
+     * @param student
+     * @return
+     */
+    IPage<Student> queryNoFilePage(Page page, Student student);
 
     /**
      * 通过ID查询单条数据
@@ -53,6 +79,15 @@ public interface StudentDao {
      * @return 影响行数
      */
     int update(Student student);
+
+    /**
+     * 检查学生是否存在
+     * <br />
+     * id 不等于 且 stuId 等于 返回 true
+     * @param student
+     * @return
+     */
+    Boolean checkExist(Student student);
 
     /**
      * 通过主键删除数据

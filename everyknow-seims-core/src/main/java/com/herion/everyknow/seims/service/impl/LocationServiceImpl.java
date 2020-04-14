@@ -35,4 +35,9 @@ public class LocationServiceImpl implements LocationService {
         return locationDao.queryProvince(provinceCode);
     }
 
+    @Override
+    public Location selectByCode(String code) {
+        return locationDao.queryById(code);
+    }
+
 }

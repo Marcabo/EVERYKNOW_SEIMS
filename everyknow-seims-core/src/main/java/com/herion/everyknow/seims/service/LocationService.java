@@ -23,4 +23,11 @@ public interface LocationService{
      */
     List<Location> selectByProvince(String provinceCode);
 
+    /**
+     * 根据城市代码查询城市
+     * @param code
+     * @return
+     */
+    Location selectByCode(String code);
+
 }

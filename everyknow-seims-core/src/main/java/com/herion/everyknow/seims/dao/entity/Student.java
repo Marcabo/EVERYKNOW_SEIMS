@@ -17,7 +17,7 @@ import lombok.ToString;
 /**
  * @Description ${description}
  * @auther wubo25320
- * @create 2020-04-05 17:56
+ * @create 2020-04-14 10:01
  */
 @ApiModel(value = "com-herion-everyknow-seims-dao-entity-Student")
 @Getter
@@ -26,7 +26,35 @@ import lombok.ToString;
 @Builder
 @TableName(value = "student")
 public class Student implements Serializable {
-    public static final String COL_STATE = "state";
+
+    public Student() {
+    }
+
+    public Student(Integer id, String stuId, String stuName, Integer sex, Date birthDate, String collegeCode, String deptCode, Integer clazzId, String politicalStatus, Long identificationNumber, String accountType, String accountLocation, String nativePlace, String educationBackground, String nation, String phone, String wechatCode, String qqCode, String stuEmail, String stuAddr, Date entryTime, String graduationSession) {
+        this.id = id;
+        this.stuId = stuId;
+        this.stuName = stuName;
+        this.sex = sex;
+        this.birthDate = birthDate;
+        this.collegeCode = collegeCode;
+        this.deptCode = deptCode;
+        this.clazzId = clazzId;
+        this.politicalStatus = politicalStatus;
+        this.identificationNumber = identificationNumber;
+        this.accountType = accountType;
+        this.accountLocation = accountLocation;
+        this.nativePlace = nativePlace;
+        this.educationBackground = educationBackground;
+        this.nation = nation;
+        this.phone = phone;
+        this.wechatCode = wechatCode;
+        this.qqCode = qqCode;
+        this.stuEmail = stuEmail;
+        this.stuAddr = stuAddr;
+        this.entryTime = entryTime;
+        this.graduationSession = graduationSession;
+    }
+
     /**
      * 主键
      */
@@ -86,9 +114,9 @@ public class Student implements Serializable {
     /**
      * 政治面貌
      */
-    @TableField(value = "politicalStatus")
+    @TableField(value = "political_status")
     @ApiModelProperty(value = "政治面貌")
-    private String politicalstatus;
+    private String politicalStatus;
 
     /**
      * 身份证号码
@@ -107,9 +135,9 @@ public class Student implements Serializable {
     /**
      * 户口所在地编码
      */
-    @TableField(value = "account_location_code")
+    @TableField(value = "account_location")
     @ApiModelProperty(value = "户口所在地编码")
-    private String accountLocationCode;
+    private String accountLocation;
 
     /**
      * 生源地
@@ -199,13 +227,13 @@ public class Student implements Serializable {
 
     public static final String COL_CLAZZ_ID = "clazz_id";
 
-    public static final String COL_POLITICALSTATUS = "politicalStatus";
+    public static final String COL_POLITICAL_STATUS = "political_status";
 
     public static final String COL_IDENTIFICATION_NUMBER = "identification_number";
 
     public static final String COL_ACCOUNT_TYPE = "account_type";
 
-    public static final String COL_ACCOUNT_LOCATION_CODE = "account_location_code";
+    public static final String COL_ACCOUNT_LOCATION = "account_location";
 
     public static final String COL_NATIVE_PLACE = "native_place";
 
@@ -227,7 +255,4 @@ public class Student implements Serializable {
 
     public static final String COL_GRADUATION_SESSION = "graduation_session";
 
-    public static com.herion.everyknow.seims.dao.entity.Student.StudentBuilder builder() {
-        return new com.herion.everyknow.seims.dao.entity.Student.StudentBuilder();
-    }
 }

@@ -3,11 +3,9 @@ package com.herion.everyknow.seims.service.bean;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Description ${description}
@@ -23,7 +21,7 @@ public class StudentUpload implements Serializable {
     public StudentUpload() {
     }
 
-    public StudentUpload(String stuId, String stuName, String sex, String birthDate, String collegeName, String deptName, String clazz, String politicalstatus, Long identificationNumber, String accountType, String accountLocation, String nativePlace, String educationBackground, String nation, String phone, String wechatCode, String qqCode, String stuEmail, String stuAddr, String entryTime, String graduationSession) {
+    public StudentUpload(String stuId, String stuName, String sex, String birthDate, String collegeName, String deptName, String clazz, String politicalStatus, Long identificationNumber, String accountType, String accountLocation, String nativePlace, String educationBackground, String nation, String phone, String wechatCode, String qqCode, String stuEmail, String stuAddr, String entryTime, String graduationSession) {
         this.stuId = stuId;
         this.stuName = stuName;
         this.sex = sex;
@@ -31,7 +29,7 @@ public class StudentUpload implements Serializable {
         this.collegeName = collegeName;
         this.deptName = deptName;
         this.clazz = clazz;
-        this.politicalstatus = politicalstatus;
+        this.politicalStatus = politicalStatus;
         this.identificationNumber = identificationNumber;
         this.accountType = accountType;
         this.accountLocation = accountLocation;
@@ -152,7 +150,7 @@ public class StudentUpload implements Serializable {
     private String clazz;
 
     @ExcelProperty("政治面貌")
-    private String politicalstatus;
+    private String politicalStatus;
 
     @ExcelProperty("身份证号码")
     private Long identificationNumber;
