@@ -5,7 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table student_file-->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
     <result column="institution_name" jdbcType="VARCHAR" property="institutionName" />
     <result column="institution_place" jdbcType="VARCHAR" property="institutionPlace" />
     <result column="institution_phone" jdbcType="VARCHAR" property="institutionPhone" />
@@ -15,7 +15,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, student_id, institution_name, institution_place, institution_phone, out_way, 
-    out_date, description
+    id, stu_id, institution_name, institution_place, institution_phone, out_way, out_date, 
+    description
   </sql>
 </mapper>

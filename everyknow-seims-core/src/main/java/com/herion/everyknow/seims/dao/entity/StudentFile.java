@@ -15,7 +15,7 @@ import lombok.ToString;
 /**
  * @Description ${description}
  * @auther wubo25320
- * @create 2020-03-24 11:09
+ * @create 2020-04-15 14:32
  */
 @ApiModel(value = "com-herion-everyknow-seims-dao-entity-StudentFile")
 @Getter
@@ -23,6 +23,7 @@ import lombok.ToString;
 @ToString
 @TableName(value = "student_file")
 public class StudentFile implements Serializable {
+    public static final String COL_STUDENT_ID = "student_id";
     /**
      * 主键
      */
@@ -33,9 +34,9 @@ public class StudentFile implements Serializable {
     /**
      * 学生学号
      */
-    @TableField(value = "student_id")
+    @TableField(value = "stu_id")
     @ApiModelProperty(value = "学生学号")
-    private String studentId;
+    private String stuId;
 
     /**
      * 接受档案机构名称
@@ -83,7 +84,7 @@ public class StudentFile implements Serializable {
 
     public static final String COL_ID = "id";
 
-    public static final String COL_STUDENT_ID = "student_id";
+    public static final String COL_STU_ID = "stu_id";
 
     public static final String COL_INSTITUTION_NAME = "institution_name";
 

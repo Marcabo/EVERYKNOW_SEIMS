@@ -75,7 +75,7 @@ public class StudentDaoImpl implements StudentDao {
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
         wrapper.ne(Student::getId, student.getId());
         wrapper.eq(Student::getStuId, student.getStuId());
-        return mapper.selectList(wrapper).size() >= 0;
+        return mapper.selectList(wrapper).size() > 0;
     }
 
     @Override
