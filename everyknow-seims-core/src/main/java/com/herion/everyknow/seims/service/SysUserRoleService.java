@@ -25,7 +25,7 @@ public interface SysUserRoleService {
      * @param sysUserRole 实例对象
      * @return 实例对象
      */
-    SysUserRole insert(SysUserRole sysUserRole);
+    int insert(SysUserRole sysUserRole);
 
     /**
      * 修改数据
@@ -33,7 +33,7 @@ public interface SysUserRoleService {
      * @param sysUserRole 实例对象
      * @return 实例对象
      */
-    SysUserRole update(SysUserRole sysUserRole);
+    int update(SysUserRole sysUserRole);
 
     /**
      * 通过主键删除数据
@@ -42,5 +42,12 @@ public interface SysUserRoleService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    /**
+     * 根据 用户id 获取 用户角色
+     * @param userId
+     * @return
+     */
+    SysUserRole queryByUserId(Integer userId);
 
 }

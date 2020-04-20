@@ -12,11 +12,16 @@ import com.herion.everyknow.web.response.EKnowPageResponse;
 import com.herion.everyknow.web.response.EKnowResponse;
 import com.herion.everyknow.web.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -29,7 +34,7 @@ import java.util.Collection;
 @Order(1)
 @Aspect
 @Slf4j
-//@RestControllerAdvice
+@RestControllerAdvice
 public class ControllerAspect {
 
 //    /**
@@ -53,6 +58,23 @@ public class ControllerAspect {
 //        exception.printStackTrace();
 //        return ResultUtils.getFailureResponse("500","未知异常", null);
 //    }
+
+    /**
+     * aroundController 中的 异常处理只能处理 Controller 层中的异常.进入 Controller 层之前的异常无法捕获
+     * 这个方法就是为了 捕获 Shiro 的 AuthorizationException(授权类异常)
+     * // TODO 后续需要完善, UnauthenticatedException UnauthenticatedException UnauthenticatedException
+     * @param e
+     * @return
+     * @throws Throwable
+     */
+    @ExceptionHandler(AuthorizationException.class)
+    public EKnowResponse AuthorizationExceptionHandler(Exception e) {
+        log.info(e.getMessage());
+        if (e instanceof UnauthenticatedException) {
+            UnauthorizedException unauthorizedException = (UnauthorizedException) e;
+        }
+        return ResultUtils.getFailureResponse(EnumResponseType.NO_PERMISSION.getHttp(),EnumResponseType.NO_PERMISSION.getMsg(), EnumResponseType.NO_PERMISSION, null);
+    }
 
 
     @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
@@ -147,7 +169,7 @@ public class ControllerAspect {
         boolean pageFlag = this.isPage(args);
         if (!pageFlag) {
 //            result = ResultUtils.getFailureResponse("500", e.getClass().getName() + ": " + e.getMessage(), null);
-            result = ResultUtils.getFailureResponse("500", e.getMessage(), null);
+            result = ResultUtils.getFailureResponse(EnumResponseType.SYS_ERR.getHttp(), e.getMessage(), null);
         } else {
             EKnowPageRequest eKnowPageRequest = null;
             // 如果是分页请求入参只有一个
@@ -157,7 +179,7 @@ public class ControllerAspect {
             if (args[0] instanceof CommonHttpPageRequest) {
                 eKnowPageRequest = ((CommonHttpPageRequest) args[0]).geteKnowRequest();
             }
-            result = ResultUtils.getPageResponse("500", "未知异常", EnumResponseType.SYS_ERR, null, eKnowPageRequest);
+            result = ResultUtils.getPageResponse(EnumResponseType.SYS_ERR.getHttp(), "未知异常", EnumResponseType.SYS_ERR, null, eKnowPageRequest);
         }
         return result;
     }

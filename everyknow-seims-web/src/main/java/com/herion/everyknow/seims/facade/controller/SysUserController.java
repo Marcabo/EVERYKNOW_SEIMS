@@ -76,7 +76,7 @@ public class SysUserController {
         String currentTimeMillis = String.valueOf(System.currentTimeMillis());
         JedisUtil.setObject(Constant.PREFIX_SHIRO_REFRESH_TOKEN + request.getRequest().getUsername(), currentTimeMillis, (int)EknowConfig.getRefreshTokenExpireTime());
         // 在 Header 中的Authorization 设置AccessToken.时间戳为当前时间
-        String token = JWTUtil.sign(request.getRequest().getUsername(), String.valueOf(System.currentTimeMillis()));
+        String token = JWTUtil.sign(request.getRequest().getUsername(), currentTimeMillis);
 
 //        // 这里不能做 login. 因为此时
 //        Subject subject = SecurityUtils.getSubject();

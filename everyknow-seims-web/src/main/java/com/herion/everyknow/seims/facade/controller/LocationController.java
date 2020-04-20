@@ -10,6 +10,7 @@ import com.herion.everyknow.web.response.EKnowResponse;
 import com.herion.everyknow.web.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class LocationController {
     private LocationService locationService;
 
     @ApiOperation(value = "获取全部省份")
+    @RequiresPermissions("dddd")
     @RequestMapping(path = "/getProvinces", method = RequestMethod.POST)
     public EKnowResponse getProvinces() {
         List<Province> provinces = provinceService.selectAll();

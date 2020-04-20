@@ -89,7 +89,7 @@ public class ShiroConfig {
          * http://shiro.apache.org/web.html#urls-
          */
         LinkedHashMap<String, String> filterRuleMap = new LinkedHashMap<>();
-//        filterRuleMap.put("/user/login", "anon");
+        filterRuleMap.put("/user/login", "anon");
         filterRuleMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;

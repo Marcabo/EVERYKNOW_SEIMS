@@ -30,6 +30,8 @@ public class EknowConfig {
 
     private static String encryptJWTKey;
 
+    private static long refreshTokenTransitionExpireTime;
+
     public static Boolean getMustLogin() {
         return mustLogin;
     }
@@ -64,5 +66,14 @@ public class EknowConfig {
     @Value("${eknow.encryptJWTKey}")
     public void setEncryptJWTKey(String encryptJWTKey) {
         EknowConfig.encryptJWTKey = encryptJWTKey;
+    }
+
+    public static long getRefreshTokenTransitionExpireTime() {
+        return refreshTokenTransitionExpireTime;
+    }
+
+    @Value("${eknow.refreshTokenTransitionExpireTime}")
+    public void setRefreshTokenTransitionExpireTime(long refreshTokenTransitionExpireTime) {
+        EknowConfig.refreshTokenTransitionExpireTime = refreshTokenTransitionExpireTime;
     }
 }

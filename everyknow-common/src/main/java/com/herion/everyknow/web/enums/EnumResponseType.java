@@ -6,15 +6,18 @@ package com.herion.everyknow.web.enums;
  * @create 2020-03-18 23:20
  */
 public enum EnumResponseType {
-    SUCCESS("EKNOW_SUCCESS","执行成功"),
-    SYS_ERR("EKNOW_SYS_ERR","系统错误"),
-    NO_LOGIN("EKNOW_NO_LOGIN", "登录已过期,请重新登录"),
-    ERR_TOKEN("EKNOW_ERR_TOKEN", "Token或秘钥不正确");
+    SUCCESS("200","EKNOW_SUCCESS","执行成功"),
+    SYS_ERR("500","EKNOW_SYS_ERR","系统错误"),
+    NO_LOGIN("401","EKNOW_NO_LOGIN", "登录已过期,请重新登录"),
+    ERR_TOKEN("401","EKNOW_ERR_TOKEN", "Token或秘钥不正确"),
+    NO_PERMISSION("403","EKNOW_NO_PERMISSION", "没有权限");
 
+    String http;
     String code;
     String msg;
 
-    EnumResponseType(String code, String msg) {
+    EnumResponseType(String http, String code, String msg) {
+        this.http = http;
         this.code = code;
         this.msg = msg;
     }
@@ -31,6 +34,10 @@ public enum EnumResponseType {
         }
 
         return null;
+    }
+
+    public String getHttp() {
+        return http;
     }
 
     public String getCode() {

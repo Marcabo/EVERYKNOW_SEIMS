@@ -1,16 +1,16 @@
-package com.herion.everyknow.seims.dao;
+package com.herion.everyknow.seims.service;
 
 import com.herion.everyknow.seims.dao.entity.SysRolePermission;
-import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
- * 角色权限表(SysRolePermission)表数据库访问层
+ * 角色权限表(SysRolePermission)表服务接口
  *
  * @author wubo25320
- * @since 2020-03-23 23:47:10
+ * @since 2020-04-20 15:51:07
  */
-public interface SysRolePermissionDao {
+public interface SysRolePermissionService {
 
     /**
      * 通过ID查询单条数据
@@ -21,18 +21,10 @@ public interface SysRolePermissionDao {
     SysRolePermission queryById(Integer id);
 
     /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param sysRolePermission 实例对象
-     * @return 对象列表
-     */
-    List<SysRolePermission> queryAll(SysRolePermission sysRolePermission);
-
-    /**
      * 新增数据
      *
      * @param sysRolePermission 实例对象
-     * @return 影响行数
+     * @return 实例对象
      */
     int insert(SysRolePermission sysRolePermission);
 
@@ -40,7 +32,7 @@ public interface SysRolePermissionDao {
      * 修改数据
      *
      * @param sysRolePermission 实例对象
-     * @return 影响行数
+     * @return 实例对象
      */
     int update(SysRolePermission sysRolePermission);
 
@@ -48,8 +40,15 @@ public interface SysRolePermissionDao {
      * 通过主键删除数据
      *
      * @param id 主键
-     * @return 影响行数
+     * @return 是否成功
      */
-    int deleteById(Integer id);
+    boolean deleteById(Integer id);
+
+    /**
+     * 根据 roleId 获取 角色权限表
+     * @param roleId
+     * @return
+     */
+    List<SysRolePermission> queryByRoleId(Integer roleId);
 
 }
