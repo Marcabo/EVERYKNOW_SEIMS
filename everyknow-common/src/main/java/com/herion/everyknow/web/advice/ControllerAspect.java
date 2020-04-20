@@ -10,7 +10,7 @@ import com.herion.everyknow.web.request.EKnowRequest;
 import com.herion.everyknow.web.request.http.CommonHttpPageRequest;
 import com.herion.everyknow.web.response.EKnowPageResponse;
 import com.herion.everyknow.web.response.EKnowResponse;
-import com.herion.everyknow.web.util.ResultUtils;
+import com.herion.everyknow.web.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -146,7 +146,8 @@ public class ControllerAspect {
         Object result = null;
         boolean pageFlag = this.isPage(args);
         if (!pageFlag) {
-            result = ResultUtils.getFailureResponse("500", e.getClass().getName() + ": " + e.getMessage(), null);
+//            result = ResultUtils.getFailureResponse("500", e.getClass().getName() + ": " + e.getMessage(), null);
+            result = ResultUtils.getFailureResponse("500", e.getMessage(), null);
         } else {
             EKnowPageRequest eKnowPageRequest = null;
             // 如果是分页请求入参只有一个

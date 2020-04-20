@@ -20,12 +20,17 @@
 
     <!--  依赖版本管理配置  -->
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <mysql-connector-java>8.0.19</mysql-connector-java>
         <spring_boot_version>2.2.2.RELEASE</spring_boot_version>
         <mybatis_plus_boot_version>3.3.1</mybatis_plus_boot_version>
         <druid.version>1.1.21</druid.version>
+        <shiro-spring.version>1.5.2</shiro-spring.version>
+        <jwt.version>3.10.2</jwt.version>
+        <jedis.version>3.2.0</jedis.version>
     </properties>
 
     <!--  依赖版本管理  -->
@@ -148,6 +153,35 @@
                 <artifactId>easyexcel</artifactId>
                 <version>2.2.0-beta2</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
+
 
 
 

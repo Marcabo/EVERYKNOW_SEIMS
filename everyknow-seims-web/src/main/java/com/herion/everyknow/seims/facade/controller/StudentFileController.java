@@ -1,15 +1,10 @@
 package com.herion.everyknow.seims.facade.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
-import com.herion.everyknow.seims.dao.entity.StudentEmploymentInfo;
 import com.herion.everyknow.seims.dao.entity.StudentFile;
-import com.herion.everyknow.seims.facade.request.StudentEmploymentInfoRequest;
-import com.herion.everyknow.seims.facade.response.StudentEmploymentInfoResponse;
 import com.herion.everyknow.seims.service.*;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
 import com.herion.everyknow.web.response.EKnowResponse;
-import com.herion.everyknow.web.util.ResultUtils;
+import com.herion.everyknow.web.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

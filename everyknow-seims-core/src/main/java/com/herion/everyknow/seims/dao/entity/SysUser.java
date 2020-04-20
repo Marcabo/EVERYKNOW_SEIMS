@@ -15,7 +15,7 @@ import lombok.ToString;
 /**
  * @Description ${description}
  * @auther wubo25320
- * @create 2020-03-24 11:09
+ * @create 2020-04-20 13:57
  */
 @ApiModel(value = "com-herion-everyknow-seims-dao-entity-SysUser")
 @Getter
@@ -23,6 +23,7 @@ import lombok.ToString;
 @ToString
 @TableName(value = "sys_user")
 public class SysUser implements Serializable {
+    public static final String COL_ROLE_ID = "role_id";
     /**
      * 主键
      */
@@ -52,13 +53,6 @@ public class SysUser implements Serializable {
     private String nickname;
 
     /**
-     * 角色id
-     */
-    @TableField(value = "role_id")
-    @ApiModelProperty(value = "角色id")
-    private Integer roleId;
-
-    /**
      * 创建时间
      */
     @TableField(value = "create_time")
@@ -81,8 +75,6 @@ public class SysUser implements Serializable {
     public static final String COL_PASSWORD = "password";
 
     public static final String COL_NICKNAME = "nickname";
-
-    public static final String COL_ROLE_ID = "role_id";
 
     public static final String COL_CREATE_TIME = "create_time";
 

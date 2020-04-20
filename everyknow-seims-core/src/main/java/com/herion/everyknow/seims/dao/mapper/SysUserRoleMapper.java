@@ -1,12 +1,12 @@
 package com.herion.everyknow.seims.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.herion.everyknow.seims.dao.entity.SysUser;
+import com.herion.everyknow.seims.dao.entity.SysUserRole;
 
 /**
  * @Description ${description}
  * @auther wubo25320
- * @create 2020-04-20 13:57
+ * @create 2020-04-20 14:02
  */
-public interface SysUserMapper extends BaseMapper<SysUser> {
+public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 }

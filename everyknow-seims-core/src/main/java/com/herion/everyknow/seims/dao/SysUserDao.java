@@ -21,6 +21,14 @@ public interface SysUserDao {
     SysUser queryById(Integer id);
 
     /**
+     * 根据 用户名 密码 获取 用户
+     * @param username
+     * @param password
+     * @return
+     */
+    SysUser getUser(String username, String password);
+
+    /**
      * 查询指定行数据
      *
      * @param offset 查询起始位置

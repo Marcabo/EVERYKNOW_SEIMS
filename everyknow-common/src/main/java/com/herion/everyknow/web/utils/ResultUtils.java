@@ -1,4 +1,4 @@
-package com.herion.everyknow.web.util;
+package com.herion.everyknow.web.utils;
 
 
 import com.herion.everyknow.web.enums.EnumResponseType;
@@ -104,7 +104,7 @@ public class ResultUtils {
     public static <T> EKnowResponse<T> getFailureResponse(T t) {
         EKnowResponse<T> response = getResponse(t);
         response.setResponseType(EnumResponseType.SYS_ERR);
-        response.setRespMsg("未知异常");
+        response.setRespMsg(EnumResponseType.SYS_ERR.getCode());
         response.setRespCode("500");
         return response;
     }
@@ -114,6 +114,14 @@ public class ResultUtils {
         response.setRespCode(respCode);
         response.setRespMsg(respMsg);
         response.setResponseType(EnumResponseType.SYS_ERR);
+        return response;
+    }
+
+    public static <T> EKnowResponse<T> getFailureResponse(String respCode, String respMsg,EnumResponseType type, T t) {
+        EKnowResponse<T> response = getResponse(t);
+        response.setRespCode(respCode);
+        response.setRespMsg(respMsg);
+        response.setResponseType(type);
         return response;
     }
 

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.web.request.http.CommonHttpPageRequest;
 import com.herion.everyknow.web.response.EKnowPageResponse;
-import com.herion.everyknow.web.util.ResultUtils;
+import com.herion.everyknow.web.utils.ResultUtils;
 
 /**
  * @Description 分页工具

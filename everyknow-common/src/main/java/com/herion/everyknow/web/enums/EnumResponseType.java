@@ -7,7 +7,9 @@ package com.herion.everyknow.web.enums;
  */
 public enum EnumResponseType {
     SUCCESS("EKNOW_SUCCESS","执行成功"),
-    SYS_ERR("EKNOW_SYS_ERR","系统错误");
+    SYS_ERR("EKNOW_SYS_ERR","系统错误"),
+    NO_LOGIN("EKNOW_NO_LOGIN", "登录已过期,请重新登录"),
+    ERR_TOKEN("EKNOW_ERR_TOKEN", "Token或秘钥不正确");
 
     String code;
     String msg;

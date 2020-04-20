@@ -6,7 +6,7 @@ import com.herion.everyknow.seims.facade.request.CollegeRequest;
 import com.herion.everyknow.seims.service.CollegeService;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
 import com.herion.everyknow.web.response.EKnowResponse;
-import com.herion.everyknow.web.util.ResultUtils;
+import com.herion.everyknow.web.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

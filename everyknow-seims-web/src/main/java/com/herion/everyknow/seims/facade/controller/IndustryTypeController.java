@@ -1,14 +1,11 @@
 package com.herion.everyknow.seims.facade.controller;
 
-import com.herion.everyknow.seims.dao.entity.EmployMethod;
 import com.herion.everyknow.seims.dao.entity.IndustryType;
-import com.herion.everyknow.seims.facade.request.EmployMethodRequest;
 import com.herion.everyknow.seims.facade.request.IndustryTypeRequest;
-import com.herion.everyknow.seims.service.EmployMethodService;
 import com.herion.everyknow.seims.service.IndustryTypeService;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
 import com.herion.everyknow.web.response.EKnowResponse;
-import com.herion.everyknow.web.util.ResultUtils;
+import com.herion.everyknow.web.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

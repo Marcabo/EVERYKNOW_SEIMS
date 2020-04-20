@@ -7,7 +7,7 @@ import com.herion.everyknow.seims.service.TestService;
 import com.herion.everyknow.web.request.EKnowRequest;
 import com.herion.everyknow.web.request.http.CommonHttpRequest;
 import com.herion.everyknow.web.response.EKnowResponse;
-import com.herion.everyknow.web.util.ResultUtils;
+import com.herion.everyknow.web.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
