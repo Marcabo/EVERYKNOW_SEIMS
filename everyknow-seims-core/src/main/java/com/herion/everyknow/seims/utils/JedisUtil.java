@@ -3,6 +3,7 @@ package com.herion.everyknow.seims.utils;
 import cn.hutool.core.util.StrUtil;
 import com.herion.everyknow.common.bean.Constant;
 import com.herion.everyknow.common.exception.EKnowException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -16,6 +17,7 @@ import java.util.Set;
  * @date 2018/9/4 15:45
  */
 @Component
+@Slf4j
 public class JedisUtil {
 
     /**
@@ -46,6 +48,7 @@ public class JedisUtil {
                 return null;
             }
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("获取Jedis资源异常:" + e.getMessage());
         }
     }
@@ -61,6 +64,7 @@ public class JedisUtil {
         try {
             jedisPool.close();
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("释放Jedis资源异常:" + e.getMessage());
         }
     }
@@ -79,6 +83,7 @@ public class JedisUtil {
                 return SerializableUtil.unserializable(bytes);
             }
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("获取Redis键值getObject方法异常:key=" + key + " cause=" + e.getMessage());
         }
         return null;
@@ -96,6 +101,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.set(key.getBytes(), SerializableUtil.serializable(value));
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("设置Redis键值setObject方法异常:key=" + key + " value=" + value + " cause=" + e.getMessage());
         }
     }
@@ -118,6 +124,7 @@ public class JedisUtil {
             }
             return result;
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("设置Redis键值setObject方法异常:key=" + key + " value=" + value + " cause=" + e.getMessage());
         }
     }
@@ -133,6 +140,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.get(key);
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("获取Redis键值getJson方法异常:key=" + key + " cause=" + e.getMessage());
         }
     }
@@ -149,6 +157,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.set(key, value);
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("设置Redis键值setJson方法异常:key=" + key + " value=" + value + " cause=" + e.getMessage());
         }
     }
@@ -171,6 +180,7 @@ public class JedisUtil {
             }
             return result;
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("设置Redis键值setJson方法异常:key=" + key + " value=" + value + " cause=" + e.getMessage());
         }
     }
@@ -186,6 +196,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.del(key.getBytes());
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("删除Redis的键delKey方法异常:key=" + key + " cause=" + e.getMessage());
         }
     }
@@ -201,6 +212,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.exists(key.getBytes());
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("查询Redis的键是否存在exists方法异常:key=" + key + " cause=" + e.getMessage());
         }
     }
@@ -216,6 +228,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.keys(key);
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("模糊查询Redis的键集合keysS方法异常:key=" + key + " cause=" + e.getMessage());
         }
     }
@@ -231,6 +244,7 @@ public class JedisUtil {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.keys(key.getBytes());
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("模糊查询Redis的键集合keysB方法异常:key=" + key + " cause=" + e.getMessage());
         }
     }
@@ -248,6 +262,7 @@ public class JedisUtil {
             result = jedis.ttl(key);
             return result;
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EKnowException("获取Redis键过期剩余时间ttl方法异常:key=" + key + " cause=" + e.getMessage());
         }
     }

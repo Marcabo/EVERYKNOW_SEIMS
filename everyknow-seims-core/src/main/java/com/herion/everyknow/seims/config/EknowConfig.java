@@ -28,7 +28,11 @@ public class EknowConfig {
 
     private static long refreshTokenExpireTime;
 
+    private static long shiroCacheExpireTime;
+
     private static String encryptJWTKey;
+
+    private static String encryptAESKey;
 
     private static long refreshTokenTransitionExpireTime;
 
@@ -59,6 +63,15 @@ public class EknowConfig {
         EknowConfig.refreshTokenExpireTime = refreshTokenExpireTime;
     }
 
+    public static long getShiroCacheExpireTime() {
+        return shiroCacheExpireTime;
+    }
+
+    @Value("${eknow.shiroCacheExpireTime}")
+    public void setShiroCacheExpireTime(long shiroCacheExpireTime) {
+        EknowConfig.shiroCacheExpireTime = shiroCacheExpireTime;
+    }
+
     public static String getEncryptJWTKey() {
         return encryptJWTKey;
     }
@@ -66,6 +79,15 @@ public class EknowConfig {
     @Value("${eknow.encryptJWTKey}")
     public void setEncryptJWTKey(String encryptJWTKey) {
         EknowConfig.encryptJWTKey = encryptJWTKey;
+    }
+
+    public static String getEncryptAESKey() {
+        return encryptAESKey;
+    }
+
+    @Value("${eknow.encryptAESKey}")
+    public void setEncryptAESKey(String encryptAESKey) {
+        EknowConfig.encryptAESKey = encryptAESKey;
     }
 
     public static long getRefreshTokenTransitionExpireTime() {

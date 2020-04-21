@@ -1,6 +1,7 @@
 package com.herion.everyknow.seims.utils;
 
 import com.herion.everyknow.common.exception.EKnowException;
+import com.herion.everyknow.seims.config.EknowConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,23 +15,17 @@ import java.security.SecureRandom;
 import java.security.Security;
 
 /**
- * AES加密解密工具类
+ * AES加密解密工具类 密码加密/解密
  * @author dolyw.com
  * @date 2018/8/31 16:39
  */
-@Component
 public class AesCipherUtil {
 
     /**
      * AES密码加密私钥(Base64加密)
      */
-    private static String encryptAESKey;
+    private final static String encryptAESKey = EknowConfig.getEncryptAESKey();
     // private static final byte[] KEY = { 1, 1, 33, 82, -32, -85, -128, -65 };
-
-    @Value("${eknow.encryptAESKey}")
-    public void setEncryptAESKey(String encryptAESKey) {
-        AesCipherUtil.encryptAESKey = encryptAESKey;
-    }
 
     /**
      * logger

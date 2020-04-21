@@ -1,5 +1,6 @@
 package com.herion.everyknow.seims.config.shiro;
 
+import com.herion.everyknow.seims.config.shiro.cache.CustomCacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -114,6 +115,8 @@ public class ShiroConfig {
         subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
         securityManager.setSubjectDAO(subjectDAO);
 
+        // 设置自定义Cache 缓存
+        securityManager.setCacheManager(new CustomCacheManager());
         return securityManager;
     }
 
