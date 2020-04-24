@@ -19,6 +19,7 @@ import java.io.PrintWriter;
  * @auther wubo25320
  * @create 2020-04-16 11:00
  */
+// 暂时废弃
 public class AjaxPermissionAuthorizationFilter extends FormAuthenticationFilter {
 
     @Override

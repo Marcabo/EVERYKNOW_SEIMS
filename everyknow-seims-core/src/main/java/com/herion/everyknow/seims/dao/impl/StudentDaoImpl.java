@@ -57,7 +57,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> queryAll(Student student) {
-        return null;
+        return mapper.selectList(this.createWrapper(student));
     }
 
     @Override
@@ -86,6 +86,14 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public int insertBatch(List<Student> list) {
         return mapper.insertBatchSomeColumn(list);
+    }
+
+    private LambdaQueryWrapper<Student> createWrapper(Student student) {
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
+        if (StrUtil.isNotBlank(student.getStuId())) {
+            wrapper.eq(Student::getStuId, student.getStuId());
+        }
+        return wrapper;
     }
 
     private LambdaQueryWrapper<Student> createLikeWrapper(Student student) {

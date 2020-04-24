@@ -36,7 +36,7 @@ public class LocationController {
     private LocationService locationService;
 
     @ApiOperation(value = "获取全部省份")
-    @RequiresPermissions("dddd")
+//    @RequiresPermissions("dddd")
     @RequestMapping(path = "/getProvinces", method = RequestMethod.POST)
     public EKnowResponse getProvinces() {
         List<Province> provinces = provinceService.selectAll();

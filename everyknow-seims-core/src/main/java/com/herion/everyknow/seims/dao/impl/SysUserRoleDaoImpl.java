@@ -2,6 +2,7 @@ package com.herion.everyknow.seims.dao.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.herion.everyknow.seims.dao.SysUserRoleDao;
+import com.herion.everyknow.seims.dao.entity.SysUser;
 import com.herion.everyknow.seims.dao.entity.SysUserRole;
 import com.herion.everyknow.seims.dao.mapper.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,13 @@ public class SysUserRoleDaoImpl implements SysUserRoleDao {
     @Override
     public int deleteById(Integer id) {
         return mapper.deleteById(id);
+    }
+
+    @Override
+    public Integer deleteByUserId(Integer userId) {
+        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUserRole::getUserId, userId);
+        return mapper.delete(wrapper);
     }
 
     private LambdaQueryWrapper<SysUserRole> createWrapper(SysUserRole sysUserRole) {

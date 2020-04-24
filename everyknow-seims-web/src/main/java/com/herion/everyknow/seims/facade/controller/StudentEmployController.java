@@ -63,7 +63,7 @@ public class StudentEmployController {
         StudentEmploymentInfoResponse response = new StudentEmploymentInfoResponse();
         BeanUtil.copyProperties(source, response);
         if (StrUtil.isNotBlank(source.getCompanyCode())) {
-            response.setCompanyNatureName(companyNatureService.selectByCode(source.getCompanyCode()).getName());
+            response.setCompanyNatureName(companyNatureService.selectByCode(source.getCompanyNatureCode()).getName());
         }
         if (StrUtil.isNotBlank(source.getCompanyProvince())) {
             response.setCompanyProvinceName(provinceService.selectByCode(source.getCompanyProvince()).getProvinceName());

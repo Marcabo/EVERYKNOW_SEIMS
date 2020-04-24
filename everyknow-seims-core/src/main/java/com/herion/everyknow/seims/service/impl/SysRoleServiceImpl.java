@@ -27,7 +27,8 @@ public class SysRoleServiceImpl implements SysRoleService {
      */
     @Override
     public SysRole queryById(Integer id) {
-        return this.sysRoleDao.queryById(id);
+        SysRole sysRole = this.sysRoleDao.queryById(id);
+        return sysRole != null ? sysRole : new SysRole();
     }
 
     /**
@@ -61,5 +62,12 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public boolean deleteById(Integer id) {
         return this.sysRoleDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public SysRole queryByRoleName(String roleName) {
+        SysRole sysRole = new SysRole();
+        sysRole.setRoleName(roleName);
+        return sysRoleDao.queryAll(sysRole).get(0);
     }
 }

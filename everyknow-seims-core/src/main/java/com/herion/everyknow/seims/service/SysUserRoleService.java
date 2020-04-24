@@ -50,4 +50,11 @@ public interface SysUserRoleService {
      */
     SysUserRole queryByUserId(Integer userId);
 
+    /**
+     * 根据 userId 删除用户
+     * @param userId
+     * @return
+     */
+    Integer deleteByUserId(Integer userId);
+
 }

@@ -26,6 +26,13 @@ public interface StudentService{
     Student queryById(Integer id);
 
     /**
+     * 根据 StuId 获取学生
+     * @param stuId
+     * @return
+     */
+    Student queryByStuId(String stuId);
+
+    /**
      * 统计学生个数
      * @return
      */

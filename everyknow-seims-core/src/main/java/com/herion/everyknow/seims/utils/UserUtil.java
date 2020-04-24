@@ -2,12 +2,14 @@ package com.herion.everyknow.seims.utils;
 
 import com.auth0.jwt.JWT;
 import com.herion.everyknow.common.exception.EKnowException;
-import com.herion.everyknow.seims.dao.entity.SysUser;
-import com.herion.everyknow.seims.dao.entity.SysUserRole;
-import com.herion.everyknow.seims.service.SysUserService;
+import com.herion.everyknow.seims.dao.entity.*;
+import com.herion.everyknow.seims.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description 用户工具
@@ -19,6 +21,28 @@ public class UserUtil {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
+
+    @Autowired
+    private SysPermissionService sysPermissionService;
+
+    /**
+     * 当前用户
+     */
+    private SysUser currentUser;
+
+    /**
+     * 当前用户 角色
+     */
+    private SysRole currentRole;
 
     /**
      * 获取当前登录用户
@@ -32,6 +56,7 @@ public class UserUtil {
         if (user == null) {
             throw new EKnowException("该账号不存在");
         }
+        currentUser = user;
         return user;
     }
 
@@ -40,7 +65,7 @@ public class UserUtil {
      * @return
      */
     public Integer getUserId() {
-        return getUser().getId();
+        return currentUser.getId();
     }
 
     /**
@@ -61,4 +86,39 @@ public class UserUtil {
         return JWTUtil.getUsername(token);
     }
 
+    /**
+     * 获取当前用户 用户角色
+     * @return
+     */
+    public SysUserRole getUserRole() {
+        return sysUserRoleService.queryByUserId(currentUser.getId());
+    }
+
+    /**
+     * 获取当前用户 角色
+     * @return
+     */
+    public SysRole getCurrentRole() {
+        SysUserRole userRole = getUserRole();
+        currentRole = sysRoleService.queryById(userRole.getRoleId());
+        return currentRole;
+    }
+
+    /**
+     * 获取当前用户 角色权限
+     * @return
+     */
+    public List<SysRolePermission> getRolePermission() {
+        SysUserRole userRole = getUserRole();
+        return sysRolePermissionService.queryByRoleId(userRole.getRoleId());
+    }
+
+    /**
+     * 获取当前用户 权限
+     * @return
+     */
+    public List<SysPermission> getCurrentPermission() {
+        List<SysRolePermission> rolePermissionList = getRolePermission();
+        return rolePermissionList.stream().map(rolePermission -> sysPermissionService.queryById(rolePermission.getPermissionId())).collect(Collectors.toList());
+    }
 }

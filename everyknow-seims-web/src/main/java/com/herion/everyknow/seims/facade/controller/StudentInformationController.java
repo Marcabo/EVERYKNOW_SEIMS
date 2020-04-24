@@ -11,6 +11,7 @@ import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.herion.everyknow.seims.dao.entity.Student;
 import com.herion.everyknow.seims.facade.request.StudentRequest;
+import com.herion.everyknow.seims.facade.request.SysUserRequest;
 import com.herion.everyknow.seims.facade.response.StudentResponse;
 import com.herion.everyknow.seims.facade.utils.PageUtil;
 import com.herion.everyknow.seims.service.*;
@@ -85,6 +86,13 @@ public class StudentInformationController {
         Student student = studentService.queryById(request.getRequest().getId());
         StudentResponse studentResponse = toResponse(student);
         return ResultUtils.getSuccessResponse(studentResponse);
+    }
+
+    @RequestMapping(value = "/queryByStuId", method = RequestMethod.POST)
+    @ApiOperation("根据 学号 获取毕业生基本信息")
+    public EKnowResponse queryByStuId(@RequestBody CommonHttpRequest<StudentRequest> request) {
+        Student student = studentService.queryByStuId(request.getRequest().getStuId());
+        return ResultUtils.getSuccessResponse(student);
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.POST)

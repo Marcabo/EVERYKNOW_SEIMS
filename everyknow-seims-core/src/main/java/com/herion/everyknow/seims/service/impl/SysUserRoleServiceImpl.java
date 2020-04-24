@@ -75,4 +75,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
         }
         return sysUserRoleList.get(0);
     }
+
+    @Override
+    public Integer deleteByUserId(Integer userId) {
+        return sysUserRoleDao.deleteByUserId(userId);
+    }
 }

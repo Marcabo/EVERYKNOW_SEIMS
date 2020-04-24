@@ -52,4 +52,10 @@ public interface SysUserRoleDao {
      */
     int deleteById(Integer id);
 
+    /**
+     * 根据 用户id 删除用户角色
+     * @param userId
+     * @return
+     */
+    Integer deleteByUserId(Integer userId);
 }

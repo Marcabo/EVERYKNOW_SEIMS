@@ -229,7 +229,13 @@ public class ControllerAspect {
             if (resultH.getReturnObject() instanceof Collection) {
                 log.info("响应对象: returnObject is {}", JSONUtil.parseArray(resultH.getReturnObject(), false).setDateFormat("yyyy-MM-dd HH:mm:ss"));
             } else {
-                log.info("响应对象: returnObject is {}", JSONUtil.parseObj(resultH.getReturnObject(), false, true).setDateFormat("yyyy-MM-dd HH:mm:ss"));
+                try {
+                    // 如果是对象
+                    log.info("响应对象: returnObject is {}", JSONUtil.parseObj(resultH.getReturnObject(), false, true).setDateFormat("yyyy-MM-dd HH:mm:ss"));
+                } catch (Exception e) {
+                    // 如果是 字符串等.hutool.JSONException 异常
+                    log.info("响应对象: returnObject is {}", resultH.getReturnObject());
+                }
             }
         }
 

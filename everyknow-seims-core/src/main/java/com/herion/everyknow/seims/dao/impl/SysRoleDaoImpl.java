@@ -1,5 +1,6 @@
 package com.herion.everyknow.seims.dao.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.herion.everyknow.seims.dao.SysRoleDao;
 import com.herion.everyknow.seims.dao.entity.SysRole;
@@ -27,7 +28,11 @@ public class SysRoleDaoImpl implements SysRoleDao {
 
     @Override
     public List<SysRole> queryAll(SysRole sysRole) {
-        return null;
+        LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
+        if (StrUtil.isNotBlank(sysRole.getRoleName())) {
+            wrapper.eq(SysRole::getRoleName, sysRole.getRoleName());
+        }
+        return mapper.selectList(wrapper);
     }
 
     @Override

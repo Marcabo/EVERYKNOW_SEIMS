@@ -2,6 +2,8 @@ package com.herion.everyknow.seims.dao.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.SysUserDao;
 import com.herion.everyknow.seims.dao.entity.SysUser;
 import com.herion.everyknow.seims.dao.mapper.SysUserMapper;
@@ -23,7 +25,21 @@ public class SysUserDaoImpl implements SysUserDao {
 
     @Override
     public SysUser queryById(Integer id) {
-        return null;
+        return mapper.selectById(id);
+    }
+
+    @Override
+    public SysUser queryByUserName(String username) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        if (StrUtil.isNotBlank(username)) {
+            wrapper.eq(SysUser::getUsername, username);
+        }
+        List<SysUser> sysUserList = mapper.selectList(wrapper);
+        if (sysUserList == null || sysUserList.isEmpty()) {
+            return new SysUser();
+        }
+
+        return sysUserList.get(0);
     }
 
     @Override
@@ -45,17 +61,30 @@ public class SysUserDaoImpl implements SysUserDao {
 
     @Override
     public int insert(SysUser sysUser) {
-        return 0;
+        return mapper.insert(sysUser);
     }
 
     @Override
     public int update(SysUser sysUser) {
-        return 0;
+        return mapper.updateById(sysUser);
     }
 
     @Override
     public int deleteById(Integer id) {
-        return 0;
+        return mapper.deleteById(id);
+    }
+
+    @Override
+    public IPage<SysUser> queryPageAndRoleId(Page page, SysUser sysUser, Integer roleId) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.inSql(SysUser::getId, "select user_id from sys_user_role where role_id = " + roleId);
+        if (StrUtil.isNotBlank(sysUser.getUsername())) {
+            wrapper.like(SysUser::getUsername, sysUser.getUsername());
+        }
+        if (StrUtil.isNotBlank(sysUser.getNickname())) {
+            wrapper.like(SysUser::getNickname, sysUser.getNickname());
+        }
+        return mapper.selectPage(page, wrapper);
     }
 
     private LambdaQueryWrapper<SysUser> createWrapper(SysUser sysUser) {

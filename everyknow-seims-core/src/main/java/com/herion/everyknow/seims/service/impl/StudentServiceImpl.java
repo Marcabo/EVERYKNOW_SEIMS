@@ -10,6 +10,8 @@ import com.herion.everyknow.seims.service.listener.StudentUploadListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
   *@Description     ${description}
   *@auther          wubo25320
@@ -59,6 +61,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student queryById(Integer id) {
         return studentDao.queryById(id);
+    }
+
+    @Override
+    public Student queryByStuId(String stuId) {
+        Student student = new Student();
+        student.setStuId(stuId);
+        List<Student> studentList = studentDao.queryAll(student);
+        if (studentList == null || studentList.isEmpty()) {
+            return new Student();
+        }
+        return studentList.get(0);
     }
 
     @Override

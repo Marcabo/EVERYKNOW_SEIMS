@@ -44,4 +44,11 @@ public interface SysRoleService {
      */
     boolean deleteById(Integer id);
 
+    /**
+     * 根据 角色名称 查询角色
+     * @param roleName
+     * @return
+     */
+    SysRole queryByRoleName(String roleName);
+
 }

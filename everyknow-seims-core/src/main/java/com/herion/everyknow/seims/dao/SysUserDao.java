@@ -1,5 +1,7 @@
 package com.herion.everyknow.seims.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -19,6 +21,13 @@ public interface SysUserDao {
      * @return 实例对象
      */
     SysUser queryById(Integer id);
+
+    /**
+     * 根据 用户名 查询用户
+     * @param username
+     * @return
+     */
+    SysUser queryByUserName(String username);
 
     /**
      * 根据 用户名 密码 获取 用户
@@ -69,5 +78,14 @@ public interface SysUserDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
+
+    /**
+     * 根据 roleId, 和 条件 分页查询
+     * @param page
+     * @param sysUser
+     * @param roleId
+     * @return
+     */
+    IPage<SysUser> queryPageAndRoleId(Page page, SysUser sysUser, Integer roleId);
 
 }
