@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.StudentDao;
+import com.herion.everyknow.seims.dao.bean.StudentAndEmploy;
 import com.herion.everyknow.seims.dao.entity.Student;
 import com.herion.everyknow.seims.dao.mapper.StudentMapper;
+import com.herion.everyknow.seims.service.bean.DataVisualRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -86,6 +88,30 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public int insertBatch(List<Student> list) {
         return mapper.insertBatchSomeColumn(list);
+    }
+
+    @Override
+    public List<StudentAndEmploy> getStudentAndEmploy(Student student) {
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
+        if (StrUtil.isNotBlank(student.getGraduationSession())) {
+            wrapper.eq(Student::getGraduationSession, student.getGraduationSession());
+        }
+        if (StrUtil.isNotBlank(student.getCollegeCode())) {
+            wrapper.eq(Student::getCollegeCode, student.getCollegeCode());
+        }
+        if (StrUtil.isNotBlank(student.getDeptCode())) {
+            wrapper.eq(Student::getDeptCode, student.getDeptCode());
+        }
+        if (student.getClazzId() != null) {
+            wrapper.eq(Student::getClazzId, student.getClazzId());
+        }
+
+        return mapper.getStudentAndEmploy(wrapper);
+    }
+
+    @Override
+    public List<String> getAllGraduationSession() {
+        return mapper.getAllGraduationSession();
     }
 
     private LambdaQueryWrapper<Student> createWrapper(Student student) {

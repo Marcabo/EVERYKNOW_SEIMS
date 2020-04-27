@@ -34,4 +34,6 @@
     nation, phone, wechat_code, qq_code, stu_email, stu_addr, entry_time, graduation_session
   </sql>
     <insert id="insertBatchSomeColumn" />
+    <select id="getStudentAndEmploy" resultType="com.herion.everyknow.seims.dao.bean.StudentAndEmploy"></select>
+  <select id="getAllGraduationSession" resultType="java.lang.String"></select>
 </mapper>

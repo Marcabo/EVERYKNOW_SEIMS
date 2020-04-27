@@ -1,8 +1,11 @@
 package com.herion.everyknow.seims.dao;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.herion.everyknow.seims.dao.bean.StudentAndEmploy;
 import com.herion.everyknow.seims.dao.entity.Student;
+import com.herion.everyknow.seims.service.bean.DataVisualRequest;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -103,5 +106,18 @@ public interface StudentDao {
      * @return
      */
     int insertBatch(List<Student> list);
+
+    /**
+     * 学生表 和 学生就业信息表 联查(一对一)
+     * @param student
+     * @return
+     */
+    List<StudentAndEmploy> getStudentAndEmploy(Student student);
+
+    /**
+     * 获取当前数据库中存在的所有毕业届数
+     * @return
+     */
+    List<String> getAllGraduationSession();
 
 }

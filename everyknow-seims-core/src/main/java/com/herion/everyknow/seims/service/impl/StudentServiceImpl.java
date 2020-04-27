@@ -94,4 +94,9 @@ public class StudentServiceImpl implements StudentService {
     public IPage<Student> queryNoFilePage(Page page, Student student) {
         return studentDao.queryNoFilePage(page, student);
     }
+
+    @Override
+    public List<String> getAllGraduationSession() {
+        return studentDao.getAllGraduationSession();
+    }
 }

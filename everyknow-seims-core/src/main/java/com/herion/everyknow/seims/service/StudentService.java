@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.herion.everyknow.seims.dao.entity.Student;
 import com.herion.everyknow.seims.service.listener.StudentUploadListener;
 
+import java.util.List;
+
 /**
   *@Description     ${description}
   *@auther          wubo25320
@@ -61,4 +63,10 @@ public interface StudentService{
      * @return
      */
     IPage<Student> queryNoFilePage(Page page, Student student);
+
+    /**
+     * 获取当前数据库中存在的所有毕业届数
+     * @return
+     */
+    List<String> getAllGraduationSession();
 }

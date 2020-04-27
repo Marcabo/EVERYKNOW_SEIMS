@@ -31,10 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description 毕业生信息 Controller 层
@@ -156,6 +153,21 @@ public class StudentInformationController {
         excelWriter.write(this.getExplain(), explain);
         excelWriter.finish();
     }
+
+    @RequestMapping(value = "/getAllGraduationSession", method = RequestMethod.POST)
+    @ApiOperation("获取全部毕业届数")
+    public EKnowResponse getAllGraduationSession() {
+        List<String> allGraduationSession = studentService.getAllGraduationSession();
+        Iterator<String> iterator = allGraduationSession.iterator();
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            if (StrUtil.isBlank(next)) {
+                iterator.remove();
+            }
+        }
+        return ResultUtils.getSuccessResponse(allGraduationSession);
+    }
+
 
     private List<StudentResponse> toResponseList(List<Student> studentList) {
         ArrayList<StudentResponse> responseList = new ArrayList<>();
