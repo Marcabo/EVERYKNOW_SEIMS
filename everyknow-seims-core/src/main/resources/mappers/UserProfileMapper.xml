@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.herion.everyknow.seims.dao.mapper.UserProfileMapper">
+  <resultMap id="BaseResultMap" type="com.herion.everyknow.seims.dao.entity.UserProfile">
+    <!--@mbg.generated-->
+    <!--@Table user_profile-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="column_one" jdbcType="VARCHAR" property="columnOne" />
+    <result column="column_two" jdbcType="VARCHAR" property="columnTwo" />
+    <result column="column_three" jdbcType="VARCHAR" property="columnThree" />
+    <result column="column_four" jdbcType="VARCHAR" property="columnFour" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, avatar, phone, email, column_one, column_two, column_three, column_four
+  </sql>
+</mapper>

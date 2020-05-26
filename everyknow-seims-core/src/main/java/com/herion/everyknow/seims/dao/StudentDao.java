@@ -115,6 +115,14 @@ public interface StudentDao {
     List<StudentAndEmploy> getStudentAndEmploy(Student student);
 
     /**
+     * 学生表 和 学生就业信息表 联查(一对一)
+     * @param student
+     * @param graduationSessionList
+     * @return
+     */
+    List<StudentAndEmploy> getStudentAndEmploy(Student student, List<String> graduationSessionList);
+
+    /**
      * 获取当前数据库中存在的所有毕业届数
      * @return
      */

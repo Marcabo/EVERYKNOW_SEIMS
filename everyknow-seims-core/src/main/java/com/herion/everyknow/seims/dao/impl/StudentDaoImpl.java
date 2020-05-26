@@ -87,6 +87,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public int insertBatch(List<Student> list) {
+
         return mapper.insertBatchSomeColumn(list);
     }
 
@@ -95,6 +96,25 @@ public class StudentDaoImpl implements StudentDao {
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
         if (StrUtil.isNotBlank(student.getGraduationSession())) {
             wrapper.eq(Student::getGraduationSession, student.getGraduationSession());
+        }
+        if (StrUtil.isNotBlank(student.getCollegeCode())) {
+            wrapper.eq(Student::getCollegeCode, student.getCollegeCode());
+        }
+        if (StrUtil.isNotBlank(student.getDeptCode())) {
+            wrapper.eq(Student::getDeptCode, student.getDeptCode());
+        }
+        if (student.getClazzId() != null) {
+            wrapper.eq(Student::getClazzId, student.getClazzId());
+        }
+
+        return mapper.getStudentAndEmploy(wrapper);
+    }
+
+    @Override
+    public List<StudentAndEmploy> getStudentAndEmploy(Student student, List<String> graduationSessionList) {
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
+        if (graduationSessionList != null && !graduationSessionList.isEmpty()) {
+            wrapper.in(Student::getGraduationSession, graduationSessionList);
         }
         if (StrUtil.isNotBlank(student.getCollegeCode())) {
             wrapper.eq(Student::getCollegeCode, student.getCollegeCode());
