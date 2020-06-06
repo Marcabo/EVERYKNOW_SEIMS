@@ -12,7 +12,6 @@
     <description>Everyknow Student Employment Information Management System</description>
     <modules>
         <module>everyknow-seims-deploy</module>
-        <module>everyknow-seims-deploy</module>
         <module>everyknow-seims-web</module>
         <module>everyknow-seims-core</module>
         <module>everyknow-common</module>
