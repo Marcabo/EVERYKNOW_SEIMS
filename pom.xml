@@ -27,7 +27,7 @@
         <spring_boot_version>2.2.2.RELEASE</spring_boot_version>
         <mybatis_plus_boot_version>3.3.1</mybatis_plus_boot_version>
         <druid.version>1.1.21</druid.version>
-        <shiro-spring.version>1.5.2</shiro-spring.version>
+        <shiro-spring.version>1.7.0</shiro-spring.version>
         <jwt.version>3.10.2</jwt.version>
         <jedis.version>3.2.0</jedis.version>
     </properties>
